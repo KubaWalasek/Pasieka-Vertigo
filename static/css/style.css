@@ -1,0 +1,40 @@
+
+body {
+    background-image: url('/static/images/background.jpg');
+    background-size: cover;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    color: #ffff;
+    font-size: 75px;
+    font-style: italic;
+    text-align: center;
+    margin-top: 100px;
+    letter-spacing: 2px;
+    text-shadow: 20px 20px 20px #0a0a23;
+
+}
+
+.links {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    gap: 60px;         /* odstęp między obrazkami */
+}
+
+.links a img {
+    width: 200px;      /* zmień rozmiar według potrzeby */
+    height: 200px;     /* lub np. auto żeby nie rozciągać */
+    object-fit: cover; /* opcjonalnie, by obrazki zachowały proporcje */
+    border-radius: 50px;/* lekko zaokrąglone rogi, opcjonalnie */
+    box-shadow: 0 2px 10px #0002; /* cień, opcjonalnie */
+    transition: transform 1.2s;
+}
+
+.links a img:hover {
+    transform: scale(1.15); /* delikatne powiększenie po najechaniu */
+}

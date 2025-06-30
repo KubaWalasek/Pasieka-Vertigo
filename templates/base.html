@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Pasieka Vertigo</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div>
+    <h1> Witaj w aplikacji Pasieka Vertigo! </h1>
+    <h1> Dzisiaj  {{ current_date }} </h1>
+</div>
+{% include 'links.html' %}
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
