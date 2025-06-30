@@ -1,0 +1,62 @@
+<style>
+    .honey-table-container {
+        background: #fff;
+        padding: 32px 16px;
+        border-radius: 10px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        max-width: 600px;
+        margin: 24px auto;
+    }
+
+    .honey-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    .honey-table th, .honey-table td {
+        border: 1px solid #e0e0e0;
+        padding: 10px 12px;
+        text-align: left;
+    }
+
+    .honey-table th {
+        background: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .honey-table tr:nth-child(even) {
+        background: #fafafa;
+    }
+</style>
+
+<div class="honey-table-container">
+<h2 style="margin-bottom: 18px; text-align: center;">Lista miodów</h2>
+
+    <table class="honey-table" >
+        <tr>
+            <th>Lp.</th><th>Smak</th><th>Rozmiar</th><th>Cena</th><th>Ilość</th><th>Opcje</th>
+        </tr>
+        {% for honey in honeys %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ honey.get_type_display }}</td>
+                <td>{{ honey.get_size_display }}</td>
+                <td>{{ honey.price }}</td>
+                <td>{{ honey.quantity }}</td>
+                <td style="display: flex; gap: 8px;">
+                    <a href="{% url 'update_honey' honey.id %}">
+                        <button>UPDATE</button>
+                    </a>
+                    <a href="{% url 'delete_honey' honey.id %}">
+                        <button>DELETE</button>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Brak miodów w bazie.</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
