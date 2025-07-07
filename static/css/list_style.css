@@ -1,0 +1,36 @@
+.honey-table-container {
+    background: #fff;
+    padding: 32px 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    max-width: 1100px;    /* <-- Tu zmieniłem z 600px na 1100px */
+    margin: 24px auto;
+    /* overflow-x: auto; usunięte, bo już niepotrzebne */
+}
+
+.honey-table {
+    width: 100%;               /* Tabela rozciąga się do szerokości kontenera */
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.honey-table th, .honey-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap; /* opcjonalnie, jeśli nie chcesz łamania w komórkach */
+}
+
+.honey-table th {
+    background: #f2f2f2;
+    font-weight: 600;
+}
+
+.honey-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.honey-table td:last-child, .honey-table th:last-child {
+    width: 140px;
+    text-align: center;
+}

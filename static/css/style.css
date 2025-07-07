@@ -24,11 +24,13 @@ h1 {
     align-items: center;
     margin: 40px 0;
     gap: 60px;         /* odstęp między obrazkami */
+
+
 }
 
 .links a img {
-    width: 200px;      /* zmień rozmiar według potrzeby */
-    height: 200px;     /* lub np. auto żeby nie rozciągać */
+    width: 150px;      /* zmień rozmiar według potrzeby */
+    height: 150px;     /* lub np. auto żeby nie rozciągać */
     object-fit: cover; /* opcjonalnie, by obrazki zachowały proporcje */
     border-radius: 50px;/* lekko zaokrąglone rogi, opcjonalnie */
     box-shadow: 0 2px 10px #0002; /* cień, opcjonalnie */
@@ -38,3 +40,18 @@ h1 {
 .links a img:hover {
     transform: scale(1.15); /* delikatne powiększenie po najechaniu */
 }
+
+.link-box {
+    text-align: center;
+}
+.link-label {
+    background: #f5e8d2;
+    color: #5C4326;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px 20px ;
+    border-radius: 6px;
+    letter-spacing: 1px;
+}
+

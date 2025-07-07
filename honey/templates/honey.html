@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja miodów</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div>
+    {% include 'links.html' %}
+    <h1> Dzisiaj  {{ current_date }} </h1>
+</div>
+{% include 'honey_links.html' %}
+{% block content  %}
+{% endblock %}
+</body>
+</html>
