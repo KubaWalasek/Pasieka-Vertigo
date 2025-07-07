@@ -1,14 +1,36 @@
 from django import forms
-from .models import Honey
+from .models import HoneyOffer, HoneyTaste, HoneyType, HoneyVariant
 
-class HoneyForm(forms.ModelForm):
-    class Meta:
-        model = Honey
-        fields = ('type', 'size', 'price', 'quantity')
 
-class HoneyUpdateForm(forms.ModelForm):
+class HoneyOfferForm(forms.ModelForm):
     class Meta:
-        model = Honey
-        fields = ( 'price', 'quantity')
+        model = HoneyOffer
+        fields = '__all__'
+
+class HoneyTasteForm(forms.ModelForm):
+    class Meta:
+        model = HoneyTaste
+        fields = '__all__'
+
+class HoneyTypeForm(forms.ModelForm):
+    class Meta:
+        model = HoneyType
+        fields = '__all__'
+
+class HoneyVariantForm(forms.ModelForm):
+    class Meta:
+        model = HoneyVariant
+        fields = '__all__'
+
+class HoneyOfferUpdateForm(forms.ModelForm):
+    class Meta:
+        model = HoneyOffer
+        fields = ['price', 'quantity']
+
+
+
+
+
+
 
 

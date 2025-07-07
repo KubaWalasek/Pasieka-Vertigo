@@ -1,0 +1,47 @@
+{% extends 'honey.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Usuwasz :</h3>
+        <p>Smak: {{ form.instance.taste }}</p>
+        <p>Typ: {{ form.instance.type }}</p>
+        <p>Rozmiar: {{ form.instance.variant }}</p>
+      
+        <input type="submit" value="DELETE">
+    </form>
+</div>
+
+
+
+
+<div class="center-message">
+     {% if message %}
+         <div style="
+                max-width: 400px;
+                margin: 40px auto 0 auto;
+                background: #fffbee;
+                border: 1px solid #e6d26b;
+                border-radius: 12px;
+                box-shadow: 0 2px 16px #edd37c33;
+                padding: 34px 30px 30px 30px;
+                text-align: center;
+            ">
+             <div style="font-size: 1.2em; font-weight: 500; color: #a86d18; margin-bottom: 16px;">
+                 {{ message }}
+             </div>
+            <input type="button"
+                    value="OK"
+                    style="background: #ffe086; color: #60450b; font-weight: bold; padding: 10px 30px; border-radius: 5px; border: none; box-shadow: 0 1px 4px #f1deb3c9; cursor: pointer; transition: background 0.18s;"
+                    onclick="window.location.href='{% url 'honey_list' %}'"
+                    onmouseover="this.style.background='#ffeed4';"
+                    onmouseout="this.style.background='#ffe086';"
+             >
+
+
+         </div>
+     {% endif %}
+ </div>
+{% endblock %}
