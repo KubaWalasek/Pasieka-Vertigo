@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 class HoneyTaste(models.Model):
@@ -45,8 +46,8 @@ class HoneyOffer(models.Model):
     taste = models.ForeignKey(HoneyTaste, on_delete=models.CASCADE, default=1)
     type = models.ForeignKey(HoneyType, on_delete=models.CASCADE, default=1)
     variant = models.ForeignKey(HoneyVariant, on_delete=models.CASCADE, default=1)
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=50.00)
-    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=50.00, validators=[MinValueValidator(5.00)])
+    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
     def __str__(self):
-        return f'{self.taste} | {self.type} | {self.variant} | {self.price} zł (ilosc: {self.quantity})'
+        return f'{self.taste} | {self.type} | {self.variant} | {self.price} zł (ilość: {self.quantity})'

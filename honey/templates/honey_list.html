@@ -33,6 +33,11 @@
             </tr>
         {% endfor %}
     </table>
+    <form method="get" class="search-form">
+        {{ form.query }}
+        <button type="submit">Szukaj</button>
+    </form>
 </div>
+
 
 {% endblock %}
