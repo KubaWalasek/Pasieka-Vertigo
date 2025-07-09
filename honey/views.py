@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
-from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm
+from django.db.models import Q
+from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm, HoneySearchForm
 from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer
 
-
+####################################################################################################################
 class HoneysView(View):
     def get(self, request):
         return render(request, 'honey.html')
 
-
+####################################################################################################################
 
 class AddHoneyTasteView(View):
     def get(self, request):
@@ -28,6 +28,8 @@ class AddHoneyTasteView(View):
             form.save()
             return render(request, 'honey_edit_form.html', {'form': form})
 
+####################################################################################################################
+
 class AddHoneyTypeView(View):
     def get(self, request):
         form = HoneyTypeForm()
@@ -44,6 +46,9 @@ class AddHoneyTypeView(View):
                 })
             form.save()
             return render(request, 'honey_edit_form.html', {'form': form})
+
+
+####################################################################################################################
 
 
 class AddHoneyVariantView(View):
@@ -64,6 +69,9 @@ class AddHoneyVariantView(View):
             return render(request, 'honey_edit_form.html', {'form': form})
 
 
+####################################################################################################################
+
+
 class AddHoneyOfferView(View):
 
     def get(self, request):
@@ -82,13 +90,18 @@ class AddHoneyOfferView(View):
                 return render(request, 'honey_offer_form.html', {
                     'form': form,
                     'honey': honey,
-                    'message': 'Offer already exists !'
+                    'message_1': 'Offer already exists !'
                 })
             honey = form.save()
             return render(request, 'honey_offer_form.html', {
                 'form': form,
-                'honey': honey
+                'honey': honey,
+                'message': 'Honey offer created successfully!'
                 })
+        return render(request, 'honey_offer_form.html', {'form': form})
+
+
+####################################################################################################################
 
 
 class HoneyListView(View):
@@ -98,6 +111,9 @@ class HoneyListView(View):
             'honeys': honeys,
         })
 
+
+
+####################################################################################################################
 
 
 class UpdateHoneyOfferView(View):
@@ -120,15 +136,22 @@ class UpdateHoneyOfferView(View):
                 'honey': honey,
                 'message': 'Honey updated successfully!'
             })
+        return render(request, 'update_offer_form.html', {
+            'form': form,
+            'honey': honey
+        })
+
+
+
+####################################################################################################################
 
 
 class DeleteHoneyOfferView(View):
     def get(self, request, pk):
         honey = HoneyOffer.objects.get(pk=pk)
-        form = HoneyOfferUpdateForm(instance=honey)
         return render(request, 'delete_form.html', {
             'honey': honey,
-            'form': form
+            'message': 'Be careful, you are going to delete this offer !'
         })
 
     def post(self, request, pk):
@@ -137,8 +160,39 @@ class DeleteHoneyOfferView(View):
         return redirect('honey_list')
 
 
+####################################################################################################################
 
 
+class HoneyListView(View):
+    def get(self, request):
+        form = HoneySearchForm(request.GET)
+        honeys = HoneyOffer.objects.all().select_related('taste', 'type', 'variant').order_by('taste__taste')
+
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            if query:
+                query_lower = query.lower()
+                honeys = [
+                    honey for honey in honeys
+                    if any(
+                        query_lower in value.lower()
+                        for value in [
+                            honey.taste.taste,
+                            honey.taste.get_taste_display(),
+                            honey.type.type,
+                            honey.type.get_type_display(),
+                            honey.variant.variant,
+                            honey.variant.get_variant_display(),
+                        ]
+                    )
+                ]
+        return render(request, 'honey_list.html', {
+            'honeys': honeys,
+            'form': form,
+        })
+
+
+####################################################################################################################
 
 
 

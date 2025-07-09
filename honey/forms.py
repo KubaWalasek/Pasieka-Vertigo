@@ -1,5 +1,6 @@
 from django import forms
 from .models import HoneyOffer, HoneyTaste, HoneyType, HoneyVariant
+from django.core.validators import MinValueValidator
 
 
 class HoneyOfferForm(forms.ModelForm):
@@ -28,6 +29,13 @@ class HoneyOfferUpdateForm(forms.ModelForm):
         fields = ['price', 'quantity']
 
 
+class HoneySearchForm(forms.Form):
+    query = forms.CharField(
+        max_length=20,
+        label='',
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Wpisz czego szukasz...'})
+    )
 
 
 
