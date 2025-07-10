@@ -113,6 +113,15 @@ form label {
     color: #004085;
     border: 1px solid #6cb4f6;
 }
+
+/* Pokaż disabled w sposób wyraźny */
+input[disabled], select[disabled], textarea[disabled] {
+    background: #f6f6f6 !important;
+    color: #a1a1a1 !important;
+    cursor: not-allowed;
+    border-color: #cccccc;
+    opacity: 1;  /* Przydatne jeśli coś ustawia opacity na 0.5 lub inne */
+}
 /* ... koniec istniejącego pliku ... */
 
 
