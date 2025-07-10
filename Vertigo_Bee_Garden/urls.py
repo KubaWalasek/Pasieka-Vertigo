@@ -23,5 +23,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='base.html'), name='home'),
     path('honey/', include('honey.urls')),
     path('bee_products/', include('bee_products.urls')),
+    path('accounts/', include('accounts.urls'))
 
 ]

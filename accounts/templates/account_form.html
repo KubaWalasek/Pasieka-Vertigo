@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if url == 'user_account' %}
+                <input type="submit" value="UPDATE">
+            {% else %}
+                <input type="submit" value="LOG IN">
+            {% endif %}
+        </form>
+    </div>
+
+    {% if message %}
+        <div class="center-message">
+            <div class="message-box">
+                <div class="message-text">
+                    {{ message }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+
