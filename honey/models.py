@@ -41,6 +41,22 @@ class HoneyVariant(models.Model):
     def __str__(self):
         return f'{self.get_variant_display()}'
 
+
+class BeeProduct(models.Model):
+    BEE_PRODUCTS_CHOICES = [
+        ('Wosk', 'Wosk pszczeli - 100g'),
+        ('Propolis', 'Propolis 60% - 50ml'),
+        ('Pierzga', 'Pierzga - 300g'),
+        ('Pyłek', 'Pyłek pszczeli - 500g')
+    ]
+    name = models.CharField(max_length=20, choices=BEE_PRODUCTS_CHOICES, default='Pyłek pszczeli - 500g')
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=50.00, validators=[MinValueValidator(5.00)])
+    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+
+    def __str__(self):
+        return f'{self.get_name_display()}'
+
+
 # tworzymy ofertę z pojedynczych elementow jeden smak, jedna wielkosc ,itp.
 class HoneyOffer(models.Model):
     taste = models.ForeignKey(HoneyTaste, on_delete=models.CASCADE, default=1)

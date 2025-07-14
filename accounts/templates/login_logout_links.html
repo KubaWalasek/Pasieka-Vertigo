@@ -1,0 +1,21 @@
+{% load static %}
+<div class="links_login">
+    <div style="text-align: center;">
+        <a href='{% url 'login' %}'>
+            <img src="{% static 'images/login.jpeg' %}" alt="login" title="LOGIN">
+        </a>
+            {% if user.is_authenticated %}
+                <div class="link_login-label">{{ user.username }}</div>
+            {% else %}
+                <div class="link_login-label">LOGIN</div>
+            {% endif %}
+
+        </div>
+
+        <div style="text-align: center;">
+        <a href='{% url 'logout' %}'>
+            <img src="{% static 'images/logout.jpeg' %}" alt="logout" title="LOGOUT">
+        </a>
+            <div class="link_login-label">LOGOUT</div>
+        </div>
+</div>

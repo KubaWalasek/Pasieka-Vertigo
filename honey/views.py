@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.db.models import Q
-from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm, HoneySearchForm
-from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer
+from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm, \
+    HoneySearchForm, BeeProductForm, BeeProductUpdateForm
+from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer, BeeProduct
+
 
 ####################################################################################################################
 class HoneysView(View):
@@ -71,6 +72,23 @@ class AddHoneyVariantView(View):
 
 ####################################################################################################################
 
+class AddBeeProductView(View):
+    def get(self, request):
+        form = BeeProductForm()
+        return render(request, 'honey_edit_form.html', {'form': form})
+
+    def post(self, request):
+        form = BeeProductForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            if BeeProduct.objects.filter(name=name).exists():
+                return render(request, 'honey_edit_form.html', {
+                    'form': form,
+                    'message': 'Product already exists !'
+                })
+            form.save()
+            return render(request, 'honey_edit_form.html', {'form': form})
+
 
 class AddHoneyOfferView(View):
 
@@ -104,12 +122,14 @@ class AddHoneyOfferView(View):
 ####################################################################################################################
 
 
-class HoneyListView(View):
-    def get(self, request):
-        honeys = HoneyOffer.objects.all().order_by('taste')
-        return render(request, 'honey_list.html', {
-            'honeys': honeys,
-        })
+# class HoneyListView(View):
+#     def get(self, request):
+#         honeys = HoneyOffer.objects.all().order_by('taste')
+#         products = BeeProduct.objects.all()
+#         return render(request, 'honey_list.html', {
+#             'honeys': honeys,
+#             'products': products
+#         })
 
 
 
@@ -167,7 +187,7 @@ class HoneyListView(View):
     def get(self, request):
         form = HoneySearchForm(request.GET)
         honeys = HoneyOffer.objects.all().select_related('taste', 'type', 'variant').order_by('taste__taste')
-
+        products = BeeProduct.objects.all()
         if form.is_valid():
             query = form.cleaned_data['query']
             if query:
@@ -188,6 +208,7 @@ class HoneyListView(View):
                 ]
         return render(request, 'honey_list.html', {
             'honeys': honeys,
+            'products': products,
             'form': form,
         })
 
@@ -195,7 +216,48 @@ class HoneyListView(View):
 ####################################################################################################################
 
 
+class UpdateBeeProductView(View):
 
+    def get(self, request, pk):
+        product = BeeProduct.objects.get(pk=pk)
+        form = BeeProductUpdateForm(instance=product)
+        return render(request, 'update_product.html', {
+            'form': form,
+            'product': product
+        })
+
+    def post(self, request, pk):
+        product = BeeProduct.objects.get(pk=pk)
+        form = BeeProductUpdateForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return render(request, 'update_product.html', {
+                'form': form,
+                'product': product,
+                'message': 'Honey updated successfully!'
+            })
+        return render(request, 'update_product.html', {
+            'form': form,
+            'product': product
+        })
+
+
+
+####################################################################################################################
+
+
+class DeleteBeeProductView(View):
+    def get(self, request, pk):
+        product = BeeProduct.objects.get(pk=pk)
+        return render(request, 'delete_product.html', {
+            'product': product,
+            'message': 'Be careful, you are going to delete this product !'
+        })
+
+    def post(self, request, pk):
+        product = BeeProduct.objects.get(pk=pk)
+        product.delete()
+        return redirect('honey_list')
 
 
 

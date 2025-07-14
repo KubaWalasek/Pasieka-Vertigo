@@ -55,3 +55,43 @@ h1 {
     letter-spacing: 1px;
 }
 
+.links_login {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    z-index: 100;
+}
+
+.links_login > div {
+    text-align: center;
+}
+
+.links_login img {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
+.links_login img:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transform: scale(1.2);
+}
+
+.link_login-label {
+    margin-top: 1px;
+    font-size: 15px;
+    color: #222;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: #f5e8d2;    /* Kolor tła */
+    padding: 5px 5px;      /* Wielkość tła – grubość dookoła tekstu */
+    border-radius: 6px;
+
+}
+
+
