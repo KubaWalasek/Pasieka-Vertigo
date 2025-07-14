@@ -1,5 +1,6 @@
 {% load static %}
 <div class="links">
+    {% if user.is_authenticated %}
     <div style="text-align: center;">
         <a href="{% url 'honey_taste' %}">
             <img src="{% static 'images/smaki.jpg' %}" alt="honeys" title="DODAJ SMAK">
@@ -24,6 +25,13 @@
         </a>
         <div class="link-label">Dodaj ofertę</div>
     </div>
+     <div style="text-align: center;">
+        <a href="{% url 'add_product' %}">
+            <img src="{% static 'images/bee_product.webp' %}" alt="bee_products" title="DODAJ PRODUKT">
+        </a>
+        <div class="link-label">Dodaj produkt</div>
+    </div>
+    {% endif %}
     <div style="text-align: center;">
         <a href="{% url 'honey_list' %}">
             <img src="{% static 'images/honey_list.webp' %}" alt="honey_list" title="LISTA MIODÓW">

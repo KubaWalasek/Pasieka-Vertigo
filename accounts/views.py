@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from accounts.forms import RegisterUserForm, LoginUserForm
 
-
+######################################################################################################
 class RegisterView(View):
     def get(self, request):
         form = RegisterUserForm()
@@ -25,6 +25,7 @@ class RegisterView(View):
             'form': form,
         })
 
+######################################################################################################
 class LoginView(View):
     def get(self, request):
         form = LoginUserForm()
@@ -50,12 +51,14 @@ class LoginView(View):
             'form': form,
         })
 
+######################################################################################################
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('home')
 
 
+######################################################################################################
 class UserAccountView(LoginRequiredMixin, View):
     def get(self, request):
         form = RegisterUserForm(instance=request.user)

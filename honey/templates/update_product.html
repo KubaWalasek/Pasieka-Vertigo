@@ -5,8 +5,10 @@
     <div class="form-container">
         <form method="POST">
             {% csrf_token %}
+            <h3>Edytujesz :</h3>
+            <p>Nazwa: {{ form.instance.get_name_display }}</p>
             {{ form.as_p }}
-            <input type="submit" value="DODAJ">
+            <input type="submit" value="UPDATE">
         </form>
     <a href="{% url 'honey_list' %}" class="btn-link">CANCEL</a>
     </div>
@@ -14,15 +16,13 @@
     {% if message %}
         <div class="center-message">
             <div class="message-box">
-                <div class="message-text">{{ message }}</div>
+                <div class="message-text">
+                    {{ message }}
+                </div>
                 <div class="message-actions">
                     <a href="{% url 'honey_list' %}" class="action-btn">OK</a>
-                    </div>
+                </div>
             </div>
         </div>
     {% endif %}
 {% endblock %}
-
-
-
-

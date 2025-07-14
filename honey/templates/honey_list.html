@@ -6,9 +6,15 @@
 <div class="honey-table-container">
 <h2 style="margin-bottom: 18px; text-align: center;">Lista miodów</h2>
 
+ <form method="get" class="search-form">
+        {{ form.query }}
+        <button type="submit">Szukaj</button>
+ </form>
+
     <table class="honey-table" >
         <tr>
-            <th>Lp.</th><th>Smak</th><th>Typ</th><th>Rozmiar</th><th>Cena</th><th>Ilość</th><th>Opcje</th>
+            <th>Lp.</th><th>Smak</th><th>Typ</th><th>Rozmiar</th><th>Cena</th><th>Ilość</th>
+            {% if user.is_authenticated %}<th>Opcje</th>{% endif %}
         </tr>
         {% for honey in honeys %}
             <tr>
@@ -18,6 +24,7 @@
                 <td>{{ honey.variant }}</td>
                 <td>{{ honey.price }}</td>
                 <td>{{ honey.quantity }}</td>
+                {% if user.is_authenticated %}
                 <td style="display: flex; gap: 8px;">
                     <a href="{% url 'update_offer' honey.id  %}">
                         <button>UPDATE</button>
@@ -25,7 +32,7 @@
                     <a href="{% url 'delete_offer' honey.id %}">
                         <button>DELETE</button>
                     </a>
-                </td>
+                </td>{% endif %}
             </tr>
         {% empty %}
             <tr>
@@ -33,11 +40,41 @@
             </tr>
         {% endfor %}
     </table>
-    <form method="get" class="search-form">
-        {{ form.query }}
-        <button type="submit">Szukaj</button>
-    </form>
 </div>
+
+<div class="honey-table-container">
+<h2 style="margin-bottom: 18px; text-align: center;">Lista produktów</h2>
+
+    <table class="honey-table" >
+    <tr>
+        <th>Lp.</th><th>Nazwa</th><th>Cena</th><th>Ilość</th>
+        {% if user.is_authenticated %}<th>Opcje</th>{% endif %}
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ product.get_name_display }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+
+                {% if user.is_authenticated %}
+                <td style="display: flex; gap: 8px;">
+                    <a href="{% url 'update_product' product.id  %}">
+                        <button>UPDATE</button>
+                    </a>
+                    <a href="{% url 'delete_product' product.id %}">
+                        <button>DELETE</button>
+                    </a>
+                </td>{% endif %}
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">Brak produktów w bazie.</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
 
 
 {% endblock %}

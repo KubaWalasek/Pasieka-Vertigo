@@ -1,5 +1,5 @@
 from django import forms
-from .models import HoneyOffer, HoneyTaste, HoneyType, HoneyVariant
+from .models import HoneyOffer, HoneyTaste, HoneyType, HoneyVariant, BeeProduct
 from django.core.validators import MinValueValidator
 
 
@@ -23,9 +23,19 @@ class HoneyVariantForm(forms.ModelForm):
         model = HoneyVariant
         fields = '__all__'
 
+class BeeProductForm(forms.ModelForm):
+    class Meta:
+        model = BeeProduct
+        fields = '__all__'
+
 class HoneyOfferUpdateForm(forms.ModelForm):
     class Meta:
         model = HoneyOffer
+        fields = ['price', 'quantity']
+
+class BeeProductUpdateForm(forms.ModelForm):
+    class Meta:
+        model = BeeProduct
         fields = ['price', 'quantity']
 
 

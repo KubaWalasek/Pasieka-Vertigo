@@ -11,4 +11,7 @@ urlpatterns = [
     path('honey_list/', views.HoneyListView.as_view(), name='honey_list'),
     path('update_offer/<int:pk>/', views.UpdateHoneyOfferView.as_view(), name='update_offer'),
     path('delete_offer/<int:pk>/', views.DeleteHoneyOfferView.as_view(), name='delete_offer'),
+    path('add_product/', views.AddBeeProductView.as_view(), name='add_product' ),
+    path('update_product/<int:pk>/', views.UpdateBeeProductView.as_view(), name='update_product'),
+    path('delete_product/<int:pk>/', views.DeleteBeeProductView.as_view(), name='delete_product'),
 ]
