@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Koszyk</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+</head>
+
+<body>
+<div>{% include 'login_logout_links.html' %}</div>
+<div class='links' style="text-align: center;">
+        <a href='{% url 'home' %}'>
+            <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
+        </a>
+</div>
+<div>
+    <h1> Dzisiaj  {{ current_date }} </h1>
+</div>
+
+<div class="honey-table-container">
+<h2 style="margin-bottom: 18px; text-align: center;">KOSZYK</h2>
+
+<table class="honey-table">
+    <tr>
+        <th>#</th>
+        <th>Użytkownik</th>
+        <th>Produkt/Miód</th>
+        <th>Ilość</th>
+        <th>Cena</th>
+        <th>Łącznie</th>
+    </tr>
+    {% if user.is_authenticated %}
+    {% for item in items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.user }}</td>
+            <td>
+                {% if item.product %}
+                    {{ item.product }}
+                {% elif item.honey %}
+                    {{ item.honey }}
+                {% endif %}
+            </td>
+            <td>
+                <form method="post" action="{% url 'update_cart_item_quantity' item.id %}">
+                    {% csrf_token %}
+                    <input type="number"
+                           name="quantity"
+                           value="{{ item.quantity }}"
+                           min="0"
+                           max="{{ item.available_quantity }}"
+                           required style="width:50px;">
+                    <button type="submit">Zmień</button>
+                </form>
+            </td>
+            <td>{% if item.product %}
+                    {{ item.product.price }} PLN
+                {% elif item.honey %}
+                    {{ item.honey.price }} PLN
+                {% endif %}
+            </td>
+            <td>{{ item.total }} PLN
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center;">Brak produktów w koszyku.</td>
+        </tr>
+    {% endfor %}
+{% endif %}
+</table>
+{% if user.is_authenticated and items %}
+<div><a href="{% url 'order_summary' %}" class="btn-link2">PODSUMOWANIE</a></div>
+{% endif %}
+<div><a href="{% url 'shop_products' %}" class="btn-link3">POWRÓT DO SKLEPU</a></div>
+
+{% if message %}
+        <div class="center-message">
+            <div class="message-box {{ message.tags }}">
+                <div class="message-text">
+                    {{ message }}
+                </div>
+                 <div class="message-actions">
+                    <a href="{% url 'cart' %}" class="action-btn">OK</a>
+                </div>
+            </div>
+        </div>
+{% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj do koszyka</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+</head>
+<body>
+{% include 'login_logout_links.html' %}
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Kupujesz :</h3>
+        <p>Smak: {{ honey.taste }}</p>
+        <p>Typ: {{ honey.type }}</p>
+        <p>Rozmiar: {{ honey.variant }}</p>
+        <p>Cena: {{ honey.price }}</p>
+        {{ form.as_p }}
+        <input type="submit" value="DODAJ">
+    </form>
+    <a href="{% url 'shop_products' %}" class="btn-link">CANCEL</a>
+</div>
+
+{% if message %}
+    <div class="center-message">
+        <div class="message-box">
+            <div class="message-text">
+                {{ message }}
+            </div>
+            <div class="message-actions">
+                <a href="{% url 'cart' %}" class="action-btn">OK</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+</body>
+</html>
+

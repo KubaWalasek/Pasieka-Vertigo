@@ -6,6 +6,12 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {{ form.errors }}
+          </div>
+        {% endif %}
+
             {% if url == 'user_account' %}
                 <input type="submit" value="UPDATE">
             {% else %}

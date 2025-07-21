@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Sklep</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div>
+    {% include 'login_logout_links.html' %}
+    <div class='links' style="text-align: center;">
+        <a href='{% url 'home' %}'>
+            <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
+        </a>
+</div>
+    <h1> Dzisiaj  {{ current_date }} </h1>
+</div>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/list_style.css' %}">
+
+<div class="honey-table-container">
+<h2 style="margin-bottom: 18px; text-align: center;">Lista miodów</h2>
+
+ <form method="get" class="search-form">
+        {{ form.query }}
+        <button type="submit">Szukaj</button>
+ </form>
+
+    <table class="honey-table" >
+        <tr>
+            <th>Lp.</th><th>Smak</th><th>Typ</th><th>Rozmiar</th><th>Cena</th><th>Ilość</th>
+            {% if user.is_authenticated %}<th>Opcje</th>{% endif %}
+        </tr>
+        {% for honey in honeys %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ honey.taste }}</td>
+                <td>{{ honey.type }}</td>
+                <td>{{ honey.variant }}</td>
+                <td>{{ honey.price }}</td>
+                <td>{{ honey.quantity }}</td>
+                {% if user.is_authenticated %}
+                <td style="display: flex; gap: 8px;">
+                    <a href="{% url 'add_to_cart_honey' honey.id  %}">
+                        <button>DODAJ DO KOSZYKA</button>
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Brak miodów w bazie.</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="honey-table-container">
+<h2 style="margin-bottom: 18px; text-align: center;">Lista produktów</h2>
+
+    <table class="honey-table" >
+    <tr>
+        <th>Lp.</th><th>Nazwa</th><th>Cena</th><th>Ilość</th>
+        {% if user.is_authenticated %}<th>Opcje</th>{% endif %}
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ product.get_name_display }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+
+                {% if user.is_authenticated %}
+                <td style="display: flex; gap: 8px;">
+                    <a href="{% url 'add_to_cart_product' product.id  %}">
+                        <button>DODAJ DO KOSZYKA</button>
+                    </a>
+
+                </td>{% endif %}
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">Brak produktów w bazie.</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+
