@@ -1,5 +1,13 @@
 {% load static %}
 <div class="links_login">
+
+    <div style="text-align: center;">
+        <a href='{% url 'cart' %}'>
+            <img src="{% static 'images/koszyk.jpeg' %}" alt="koszyk" title="KOSZYK">
+        </a>
+            <div class="link_login-label">{% if user.is_authenticated %}
+                {{ items | length }}{% else %}KOSZYK{% endif %}</div>
+        </div>
     <div style="text-align: center;">
         <a href='{% url 'login' %}'>
             <img src="{% static 'images/login.jpeg' %}" alt="login" title="LOGIN">

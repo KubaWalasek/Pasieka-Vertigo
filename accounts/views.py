@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
-from accounts.forms import RegisterUserForm, LoginUserForm
+from accounts.forms import RegisterUserForm, LoginUserForm, UpdateUserForm
+
 
 ######################################################################################################
 class RegisterView(View):
@@ -61,8 +62,7 @@ class LogoutView(View):
 ######################################################################################################
 class UserAccountView(LoginRequiredMixin, View):
     def get(self, request):
-        form = RegisterUserForm(instance=request.user)
-        form.fields['username'].disabled = True
+        form = UpdateUserForm(instance=request.user)
         form.fields['password_1'].required = False
         form.fields['password_2'].required = False
         form.fields['email'].required = False
@@ -73,20 +73,28 @@ class UserAccountView(LoginRequiredMixin, View):
         })
 
     def post(self, request):
-        form = RegisterUserForm(request.POST, instance=request.user)
-        form.fields['username'].disabled = True
-        form.fields['password_1'].required = False
-        form.fields['password_2'].required = False
-        form.fields['email'].required = False
+        form = UpdateUserForm(request.POST, instance=request.user)
+
         if form.is_valid():
             user = form.save(commit=False)
-            if form.cleaned_data['password_1']:
+            if not form.changed_data :
+                message = 'No data updated'
+                return render(request, 'account_form.html', {
+                    'form': form,
+                    'message': message,
+                    'url': 'user_account'
+                })
+            if form.cleaned_data.get('password_1'):
                 user.set_password(form.cleaned_data['password_1'])
             user.save()
+            update_session_auth_hash(request, user)  # <-- to utrzyma sesję!
             messages.success(request, 'Account updated successfully!')
             return redirect('user_account')
+        else:
+            messages.error(request, 'Invalid data!')
         return render(request, 'account_form.html', {
             'form': form,
-            'message': 'You can edit your account here !'
+            'message': 'You can edit your account here !',
+            'url': 'user_account'
         })
 

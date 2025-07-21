@@ -3,11 +3,13 @@ from django.views import View
 from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm, \
     HoneySearchForm, BeeProductForm, BeeProductUpdateForm
 from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer, BeeProduct
+from shop.models import CartItem
 
 
 ####################################################################################################################
 class HoneysView(View):
     def get(self, request):
+
         return render(request, 'honey.html')
 
 ####################################################################################################################
@@ -122,18 +124,6 @@ class AddHoneyOfferView(View):
 ####################################################################################################################
 
 
-# class HoneyListView(View):
-#     def get(self, request):
-#         honeys = HoneyOffer.objects.all().order_by('taste')
-#         products = BeeProduct.objects.all()
-#         return render(request, 'honey_list.html', {
-#             'honeys': honeys,
-#             'products': products
-#         })
-
-
-
-####################################################################################################################
 
 
 class UpdateHoneyOfferView(View):
@@ -183,10 +173,10 @@ class DeleteHoneyOfferView(View):
 ####################################################################################################################
 
 
-class HoneyListView(View):
+class HoneyListAndSearchView(View):
     def get(self, request):
         form = HoneySearchForm(request.GET)
-        honeys = HoneyOffer.objects.all().select_related('taste', 'type', 'variant').order_by('taste__taste')
+        honeys = HoneyOffer.objects.all().select_related('taste', 'type', 'variant').order_by('taste__taste') #polega na **optymalizacji liczby zapytań do bazy danych** i wydajności odczytu powiązanych obiektów.
         products = BeeProduct.objects.all()
         if form.is_valid():
             query = form.cleaned_data['query']
@@ -206,6 +196,10 @@ class HoneyListView(View):
                         ]
                     )
                 ]
+                products = products.filter(name__icontains=query)
+
+
+
         return render(request, 'honey_list.html', {
             'honeys': honeys,
             'products': products,

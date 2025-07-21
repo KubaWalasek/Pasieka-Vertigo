@@ -51,7 +51,7 @@ class BeeProduct(models.Model):
     ]
     name = models.CharField(max_length=20, choices=BEE_PRODUCTS_CHOICES, default='Pyłek pszczeli - 500g')
     price = models.DecimalField(max_digits=5, decimal_places=2, default=50.00, validators=[MinValueValidator(5.00)])
-    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0)])
 
     def __str__(self):
         return f'{self.get_name_display()}'
@@ -63,7 +63,7 @@ class HoneyOffer(models.Model):
     type = models.ForeignKey(HoneyType, on_delete=models.CASCADE, default=1)
     variant = models.ForeignKey(HoneyVariant, on_delete=models.CASCADE, default=1)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=50.00, validators=[MinValueValidator(5.00)])
-    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0)])
 
     def __str__(self):
-        return f'{self.taste} | {self.type} | {self.variant} | {self.price} zł (ilość: {self.quantity})'
+        return f'Miód {self.taste} {self.type} - {self.variant}'
