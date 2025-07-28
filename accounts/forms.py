@@ -4,9 +4,19 @@ from django.contrib.auth.models import User
 ######################################################################################################
 
 class RegisterUserForm(forms.ModelForm):
-    password_1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password_2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput)
-    email = forms.EmailField(required=False)
+    username = forms.CharField(required=True)
+    password_1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
+    password_2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput, required=True)
+    email = forms.EmailField(required=True, error_messages={'required': 'Email is required'})
+    first_name = forms.CharField(max_length=20, required=False)
+    last_name = forms.CharField(max_length=20, required=False)
+    post_code = forms.CharField(max_length=10, required=False)
+    city = forms.CharField(max_length=30, required=False)
+    street = forms.CharField(max_length=30, required=False)
+    street_number = forms.CharField(max_length=10, required=False)
+    door_number = forms.CharField(max_length=10, required=False)
+    phone_number = forms.CharField(max_length=15, required=False)
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -33,6 +43,14 @@ class UpdateUserForm(forms.ModelForm):
     password_1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=False)
     password_2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput, required=False)
     email = forms.EmailField(required=False)
+    first_name = forms.CharField(max_length=20, required=False )
+    last_name = forms.CharField(max_length=20,required=False )
+    post_code = forms.CharField(max_length=10, required=False )
+    city = forms.CharField(max_length=30, required=False)
+    street = forms.CharField(max_length=30, required=False)
+    street_number = forms.CharField(max_length=10, required=False)
+    door_number = forms.CharField(max_length=10, required=False)
+    phone_number = forms.CharField(max_length=15, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

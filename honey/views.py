@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from honey.forms import HoneyOfferForm, HoneyTasteForm, HoneyVariantForm, HoneyTypeForm, HoneyOfferUpdateForm, \
@@ -14,7 +15,13 @@ class HoneysView(View):
 
 ####################################################################################################################
 
-class AddHoneyTasteView(View):
+class AddHoneyTasteView(PermissionRequiredMixin, View):
+    permission_required = 'honey.add_honeytaste'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
     def get(self, request):
         form = HoneyTasteForm()
         return render(request, 'honey_edit_form.html', {'form': form})
@@ -33,7 +40,13 @@ class AddHoneyTasteView(View):
 
 ####################################################################################################################
 
-class AddHoneyTypeView(View):
+class AddHoneyTypeView(PermissionRequiredMixin, View):
+    permission_required = 'honey.add_honeytype'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
     def get(self, request):
         form = HoneyTypeForm()
         return render(request, 'honey_edit_form.html', {'form': form})
@@ -54,7 +67,13 @@ class AddHoneyTypeView(View):
 ####################################################################################################################
 
 
-class AddHoneyVariantView(View):
+class AddHoneyVariantView(PermissionRequiredMixin, View):
+    permission_required = 'honey.add_honeyvariant'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
     def get(self, request):
         form = HoneyVariantForm()
         return render(request, 'honey_edit_form.html', {'form': form})
@@ -74,7 +93,13 @@ class AddHoneyVariantView(View):
 
 ####################################################################################################################
 
-class AddBeeProductView(View):
+class AddBeeProductView(PermissionRequiredMixin, View):
+    permission_required = 'honey.add_beeproduct'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
     def get(self, request):
         form = BeeProductForm()
         return render(request, 'honey_edit_form.html', {'form': form})
@@ -92,7 +117,13 @@ class AddBeeProductView(View):
             return render(request, 'honey_edit_form.html', {'form': form})
 
 
-class AddHoneyOfferView(View):
+class AddHoneyOfferView(PermissionRequiredMixin, View):
+    permission_required = 'honey.add_honeyoffer'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
 
     def get(self, request):
         form = HoneyOfferForm()
@@ -126,7 +157,13 @@ class AddHoneyOfferView(View):
 
 
 
-class UpdateHoneyOfferView(View):
+class UpdateHoneyOfferView(PermissionRequiredMixin, View):
+    permission_required = 'honey.change_honeyoffer'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
 
     def get(self, request, pk):
         honey = HoneyOffer.objects.get(pk=pk)
@@ -156,7 +193,14 @@ class UpdateHoneyOfferView(View):
 ####################################################################################################################
 
 
-class DeleteHoneyOfferView(View):
+class DeleteHoneyOfferView(PermissionRequiredMixin, View):
+    permission_required = 'honey.delete_honeyoffer'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
+
     def get(self, request, pk):
         honey = HoneyOffer.objects.get(pk=pk)
         return render(request, 'delete_form.html', {
@@ -210,7 +254,13 @@ class HoneyListAndSearchView(View):
 ####################################################################################################################
 
 
-class UpdateBeeProductView(View):
+class UpdateBeeProductView(PermissionRequiredMixin, View):
+    permission_required = 'honey.change_beeproduct'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
 
     def get(self, request, pk):
         product = BeeProduct.objects.get(pk=pk)
@@ -228,7 +278,7 @@ class UpdateBeeProductView(View):
             return render(request, 'update_product.html', {
                 'form': form,
                 'product': product,
-                'message': 'Honey updated successfully!'
+                'message': 'Product updated successfully!'
             })
         return render(request, 'update_product.html', {
             'form': form,
@@ -240,7 +290,13 @@ class UpdateBeeProductView(View):
 ####################################################################################################################
 
 
-class DeleteBeeProductView(View):
+class DeleteBeeProductView(PermissionRequiredMixin, View):
+    permission_required = 'honey.delete_beeproduct'
+
+    def handle_no_permission(self):
+        # Wyświetl widok z własnym komunikatem lub przekieruj
+        return render(self.request,'honey_edit_form.html',{'message': 'You have no permissions.'})
+
     def get(self, request, pk):
         product = BeeProduct.objects.get(pk=pk)
         return render(request, 'delete_product.html', {

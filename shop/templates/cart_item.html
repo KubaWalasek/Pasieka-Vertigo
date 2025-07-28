@@ -75,6 +75,12 @@
 {% if user.is_authenticated and items %}
 <div><a href="{% url 'order_summary' %}" class="btn-link2">PODSUMOWANIE</a></div>
 {% endif %}
+{% if not user.is_authenticated %}
+    <div style="text-align: center; margin: 16px 0;">
+        <strong>Brak produktów w koszyku.</strong><br>
+        <strong>Zaloguj się, aby móc zrobić zakupy.</strong>
+    </div>
+{% endif %}
 <div><a href="{% url 'shop_products' %}" class="btn-link3">POWRÓT DO SKLEPU</a></div>
 
 {% if message %}
