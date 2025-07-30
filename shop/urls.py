@@ -1,7 +1,7 @@
 from django.urls import path
 
 from shop.views import CartItemView, ShopProductView, AddToCartHoneyView, AddToCartProductView, \
-    UpdateCartItemQuantityView, OrderSummaryView
+    UpdateCartItemQuantityView, OrderSummaryView, SendOrderView
 
 urlpatterns = [
     path('cart/', CartItemView.as_view(), name='cart'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('add_to_cart_product/<int:pk>/', AddToCartProductView.as_view(), name='add_to_cart_product'),
     path('cart_view/', CartItemView.as_view(), name='cart_view'),
     path('cart/update_quantity/<int:pk>/', UpdateCartItemQuantityView.as_view(), name='update_cart_item_quantity'),
-    path('order_summary/', OrderSummaryView.as_view(),name='order_summary')
+    path('order_summary/', OrderSummaryView.as_view(),name='order_summary'),
+    path('send_order/', SendOrderView.as_view(), name='send_order')
 ]

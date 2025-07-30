@@ -2,7 +2,7 @@
 <html lang='pl'>
 <head>
     <meta charset="UTF-8">
-    <title>Podsumowanie</title>
+    <title>Dane do zamówienia</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
@@ -21,7 +21,7 @@
 </div>
 
 <div class="honey-table-container">
-<h2 style="margin-bottom: 18px; text-align: center;">PODSUMOWANIE</h2>
+<h2 style="margin-bottom: 18px; text-align: center;">DANE DO ZAMÓWIENIA</h2>
 
 <table class="honey-table">
     <tr>
@@ -65,7 +65,13 @@
         </tr>
 {% endif %}
 </table>
-<div><a href='{% url 'send_order' %}' class="btn-link2">ZAMAWIAM</a></div>
+
+<form method="post" >
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit" class="btn-link2" >KUPUJĘ</button>
+</form>
+
 <div><a href="{% url 'cart' %}" class="btn-link3">POWRÓT DO KOSZYKA</a></div>
 
 {% if message %}
