@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset="UTF-8">
+    <title>Podsumowanie zamówienia</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+</head>
+<body>
+<div>{% include 'login_logout_links.html' %}</div>
+<div class='links' style="text-align: center;">
+    <a href='{% url 'home' %}'>
+        <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
+    </a>
+</div>
+<div>
+    <h1>Data zamówienia {{ current_date }}</h1>
+</div>
+
+<div class="honey-table-container">
+    <h2 style="margin-bottom: 18px; text-align: center;">PODSUMOWANIE ZAMÓWIENIA</h2>
+    <h3>Co zamówiłeś:</h3>
+    <table class="honey-table">
+        <tr>
+            <th>#</th>
+            <th>Produkt/Miód</th>
+            <th>Ilość</th>
+            <th>Cena</th>
+            <th>Łącznie</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    {% if item.product %}
+                        {{ item.product }}
+                    {% elif item.honey %}
+                        {{ item.honey }}
+                    {% endif %}
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>
+                    {% if item.product %}
+                        {{ item.product.price }} PLN
+                    {% elif item.honey %}
+                        {{ item.honey.price }} PLN
+                    {% endif %}
+                </td>
+                <td>{{ item.total }} PLN</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4" style="text-align:right;"><strong>Całkowity koszt:</strong></td>
+            <td><strong>{{ total_cart }} PLN</strong></td>
+        </tr>
+    </table>
+
+    <hr style="margin: 30px 0;">
+
+    <h3>Dane do wysyłki:</h3>
+    <div class="order-data-summary">
+        <p>
+            <strong>Imię i nazwisko:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}<br>
+            <strong>E-mail:</strong> {{ user.email }}<br>
+            <strong>Telefon:</strong> {{ user_profile.phone_number }}<br>
+            <strong>Miejscowość:</strong> {{ user_profile.post_code }} {{ user_profile.city }}<br>
+            <strong>Adres:</strong> {{ user_profile.street }} {{ user_profile.street_number }}{% if user_profile.door_number %}/{{ user_profile.door_number }}{% endif %}
+        </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'shop_products' %}" class="btn-link3">Wróć do sklepu</a>
+    </div>
+</div>
+</body>
+</html>

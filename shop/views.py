@@ -4,7 +4,7 @@ from django.views import View
 import honey
 from honey.forms import HoneySearchForm
 from honey.models import HoneyOffer, BeeProduct
-from shop.forms import AddToCartHoneyForm, AddToCartBeeProductForm
+from shop.forms import AddToCartHoneyForm, AddToCartBeeProductForm, OrderDataForm
 from shop.models import CartItem
 
 
@@ -172,6 +172,53 @@ class UpdateCartItemQuantityView(View):
 class OrderSummaryView(View):
     def get(self, request):
         return render(request, 'order_summary.html')
+
+class SendOrderView(View):
+    def get(self, request):
+        user = request.user
+        user_profile = user.userprofile
+        initial_data = {
+            'first_name': user_profile.first_name or '',
+            'last_name': user_profile.last_name or '',
+            'email': user.email,
+            'post_code': user_profile.post_code or '',
+            'city': user_profile.city or '',
+            'street': user_profile.street or '',
+            'street_number': user_profile.street_number or '',
+            'door_number': user_profile.door_number or '',
+            'phone_number': user_profile.phone_number or '',
+        }
+        form = OrderDataForm(initial=initial_data)
+
+        return render(request, 'order_data.html', {
+            'form': form,
+            'user_profile': user_profile,
+            'user': user,
+        })
+
+    def post(self, request):
+        user = request.user
+        user_profile = user.userprofile
+        form = OrderDataForm(request.POST)
+        if form.is_valid():
+            user_profile.first_name = form.cleaned_data['first_name']
+            user_profile.last_name = form.cleaned_data['last_name']
+            user_profile.post_code = form.cleaned_data['post_code']
+            user_profile.city = form.cleaned_data['city']
+            user_profile.street = form.cleaned_data['street']
+            user_profile.street_number = form.cleaned_data['street_number']
+            user_profile.door_number = form.cleaned_data['door_number']
+            user_profile.phone_number = form.cleaned_data['phone_number']
+
+
+            return render(request, 'order_finished.html', {
+                    'user_profile': user_profile,
+                    'user': user,
+                    'form': form,
+                })
+
+
+
 
 
 
