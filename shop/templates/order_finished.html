@@ -30,30 +30,30 @@
             <th>Cena</th>
             <th>Łącznie</th>
         </tr>
-        {% for item in items %}
+        {% for cart_item in items_in_cart %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>
-                    {% if item.product %}
-                        {{ item.product }}
-                    {% elif item.honey %}
-                        {{ item.honey }}
+                    {% if cart_item.product %}
+                        {{ cart_item.product }}
+                    {% elif cart_item.honey %}
+                        {{ cart_item.honey }}
                     {% endif %}
                 </td>
-                <td>{{ item.quantity }}</td>
+                <td>{{ cart_item.quantity }}</td>
                 <td>
-                    {% if item.product %}
-                        {{ item.product.price }} PLN
-                    {% elif item.honey %}
-                        {{ item.honey.price }} PLN
+                    {% if cart_item.product %}
+                        {{ cart_item.product.price }} PLN
+                    {% elif cart_item.honey %}
+                        {{ cart_item.honey.price }} PLN
                     {% endif %}
                 </td>
-                <td>{{ item.total }} PLN</td>
+                <td>{{ cart_item.total_price }}</td>
             </tr>
         {% endfor %}
         <tr>
             <td colspan="4" style="text-align:right;"><strong>Całkowity koszt:</strong></td>
-            <td><strong>{{ total_cart }} PLN</strong></td>
+            <td><strong>{{ total_in_cart_price }} PLN</strong></td>
         </tr>
     </table>
 
