@@ -200,6 +200,21 @@ class SendOrderView(View):
         user = request.user
         user_profile = user.userprofile
         form = OrderDataForm(request.POST)
+        items_queryset = CartItem.objects.select_related('product', 'honey').filter(user=user)
+        items_in_cart = list(items_queryset)
+        total_in_cart_price = 0
+        total_line_price = 0
+        for cart_item in items_in_cart:
+            if cart_item.honey:
+                price = cart_item.honey.price
+                total_line_price = price * cart_item.quantity
+                total_in_cart_price += cart_item.honey.price * cart_item.quantity
+            elif cart_item.product:
+                price = cart_item.product.price
+                total_line_price = price * cart_item.quantity
+                total_in_cart_price += cart_item.product.price * cart_item.quantity
+            cart_item.total_price = total_line_price
+
         if form.is_valid():
             user_profile.first_name = form.cleaned_data['first_name']
             user_profile.last_name = form.cleaned_data['last_name']
@@ -209,14 +224,14 @@ class SendOrderView(View):
             user_profile.street_number = form.cleaned_data['street_number']
             user_profile.door_number = form.cleaned_data['door_number']
             user_profile.phone_number = form.cleaned_data['phone_number']
-
-
+            items_queryset.delete()
             return render(request, 'order_finished.html', {
                     'user_profile': user_profile,
                     'user': user,
                     'form': form,
-                })
-
+                    'items_in_cart' : items_in_cart,
+                    'total_in_cart_price': total_in_cart_price,
+                    })
 
 
 
