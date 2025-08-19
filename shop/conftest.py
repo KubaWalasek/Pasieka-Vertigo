@@ -18,7 +18,7 @@ def product():
 
 @pytest.fixture
 def user():
-    return User.objects.create_user(username='testuser', password='testpassword')
+    return User.objects.create_user(username='testuser', password='testpassword', email='test@example.com')
 
 
 

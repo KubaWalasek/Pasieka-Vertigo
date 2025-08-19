@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-
 from shop.models import CartItem
 
 
@@ -15,12 +14,12 @@ def test_shop_product_view(client):
 @pytest.mark.django_db
 def test_shop_honey_view_search_results(client, offer):
     url = reverse('shop_products')
-    offer[0].taste.taste = 'Akacowy'
+    offer[0].taste.taste = 'Akacjowy'
     offer[0].taste.save()
     data = {'query': 'AKA'}
     response = client.get(url, data)
     print(response.content.decode())
-    assert '<td>Akac' in response.content.decode()
+    assert '<td>Aka' in response.content.decode()
 
 @pytest.mark.django_db
 def test_shop_product_view_search_results(client, product):
@@ -116,6 +115,117 @@ def test_add_to_cart_product_view_update_quantity_post_success(client, product, 
     assert response.status_code == 200
     assert CartItem.objects.get(user=user, product=product[0]).quantity == 20
     assert 'Quantity updated' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_cart_item_view(client):
+    url = reverse('cart')
+    response = client.get(url)
+    assert response.status_code == 200
+    assert '<strong>Zaloguj się' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_cart_item_view_login_empty(client, user):
+    client.force_login(user)
+    url = reverse('cart')
+    response = client.get(url)
+    assert response.status_code ==200
+    assert 'Brak produktów w koszyku' in response.content.decode()
+
+@pytest.mark.django_db
+def test_cart_item_view_login_not_empty(client, user, offer):
+    client.force_login(user)
+    CartItem.objects.create(user=user, honey=offer[0], quantity=10)
+    url = reverse('cart')
+    response = client.get(url)
+    print(response.content.decode())
+    assert response.status_code ==200
+    assert 'value="10"' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_post_success_honey(client, user, offer):
+    client.force_login(user)
+    cart_item = CartItem.objects.create(user=user, honey=offer[0], quantity=10)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 20}
+    response = client.post(url, data)
+    assert response.status_code == 302
+    assert CartItem.objects.get(user=user, honey=offer[0]).quantity == 20
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_post_delete_honey(client, user, offer):
+    client.force_login(user)
+    cart_item = CartItem.objects.create(user=user, honey=offer[0], quantity=10)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 0}
+    response = client.post(url, data)
+    assert response.status_code == 302
+    assert not CartItem.objects.filter(user=user, honey=offer[0]).exists()
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_post_success_product(client, user, product):
+    client.force_login(user)
+    cart_item = CartItem.objects.create(user=user, product=product[0], quantity=10)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 20}
+    response = client.post(url, data)
+    assert response.status_code == 302
+    assert CartItem.objects.get(user=user, product=product[0]).quantity == 20
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_post_delete_product(client, user, product):
+    client.force_login(user)
+    cart_item = CartItem.objects.create(user=user, product=product[0], quantity=10)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 0}
+    response = client.post(url, data)
+    assert response.status_code == 302
+    assert not CartItem.objects.filter(user=user, product=product[0]).exists()
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_too_many_honeys(client, user, offer):
+    client.force_login(user)
+    offer[0].quantity = 100
+    offer[0].save()
+    cart_item = CartItem.objects.create(user=user, honey=offer[0], quantity=20)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 210}
+    response = client.post(url, data)
+    print(response.content.decode())
+    assert 'Not enough quantity' in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_cart_item_view_update_quantity_too_many_products(client, user, product):
+    client.force_login(user)
+    product[0].quantity = 100
+    product[0].save()
+    cart_item = CartItem.objects.create(user=user, product=product[0], quantity=20)
+    url = reverse('update_cart_item_quantity', kwargs={'pk': cart_item.pk})
+    data = {'quantity': 210}
+    response = client.post(url, data)
+    print(response.content.decode())
+    assert 'Not enough quantity' in response.content.decode()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
