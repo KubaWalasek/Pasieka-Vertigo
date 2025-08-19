@@ -26,6 +26,12 @@ class RegisterUserForm(forms.ModelForm):
         if password_1 != password_2:
             raise forms.ValidationError('Passwords do not match')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('Użytkownik z tym adresem e-mail już istnieje')
+        return email
+
     class Meta:
         model = User
         fields = ['username', 'email']

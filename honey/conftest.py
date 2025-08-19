@@ -2,7 +2,8 @@ import pytest
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer
+from honey.models import HoneyTaste, HoneyType, HoneyVariant, HoneyOffer, BeeProduct
+
 
 @pytest.fixture
 def taste():
@@ -40,3 +41,13 @@ def offer(taste, honey_type, variant):
             quantity=(i+1)*100)
         lst.append(offer)
     return lst
+
+@pytest.fixture
+def product():
+    lst = []
+    for i in range(1,11):
+        product = BeeProduct.objects.create(
+            name=f'Product {i}',
+            price=i*10,
+            quantity=i*100)
+        lst.append(product)

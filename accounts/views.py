@@ -54,6 +54,12 @@ class LoginView(View):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
+            if request.user.is_authenticated and request.user.username == username and user is not None :
+                return render(request, 'account_form.html', {
+                    'form': form,
+                    'message': 'You are already logged in !'
+                })
+
             if user is not None:
                 login(request, user)
                 next_url = request.GET.get('next', 'home')
