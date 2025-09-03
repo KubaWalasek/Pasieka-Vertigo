@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+python manage.py collectstatic --noinput
+
 echo "=== PYTHON/UVICORN DIAGNOSTICS START ==="
 python - <<'PYCODE'
 import os, sys, importlib
