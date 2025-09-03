@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+import os
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -25,7 +25,17 @@ SECRET_KEY = 'django-insecure-i877+455yyolpr@$_sympt#b182&gk&)4+r(jy%nrc+wre@^c8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "")
+if ALLOWED_HOSTS:
+    ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS.split(",") if h.strip()]
+else:
+    ALLOWED_HOSTS = []
+
+# CSRF_TRUSTED_ORIGINS także z ENV (pełne adresy z https://, rozdzielone przecinkami)
+_CSRF_TRUSTED = os.getenv("CSRF_TRUSTED_ORIGINS", "")
+if _CSRF_TRUSTED:
+    CSRF_TRUSTED_ORIGINS = [u.strip() for u in _CSRF_TRUSTED.split(",") if u.strip()]
+
 
 
 # Application definition
