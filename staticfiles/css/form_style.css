@@ -1,0 +1,159 @@
+
+
+.form-container {
+    background: #fff;
+    margin: 40px auto;
+    padding: 32px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px rgba(42,42,42,0.08);
+    max-width: 420px;
+    min-width: 320px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container h2,
+.form-container form {
+    width: 100%;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 1.1em;
+    background: #efe4a1;
+    border: none;
+    border-radius: 8px;
+    margin-top: 16px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+form input[type="submit"]:hover {
+    background: #ffd113;
+}
+form input, form select, form textarea {
+    font-size: 1.1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 18px;
+}
+form label {
+    font-weight: bold;
+}
+
+/* ... początek istniejącego pliku ... */
+
+.center-message {
+    color: #d00000 ;
+    font-size: 2em ;
+    text-transform: uppercase ;
+    text-align: center ;
+    margin-top: 40px ;
+    font-weight: bold ;
+}
+
+/* Nowe style do estetycznego boxa komunikatu */
+
+.message-box {
+    max-width: 380px;
+    margin: 40px auto 0 auto;
+    background: #fffbee;
+    border: 1px solid #e6d26b;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px #edd37c33;
+    padding: 24px 18px 22px 18px;
+    text-align: center;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-size: 1em;
+}
+
+.message-text {
+    font-size: 1.08em;
+    font-weight: 500;
+    color: #a86d18;
+    margin-bottom: 19px;
+    word-break: break-word;
+}
+
+.ok-btn {
+    background: #ffe086;
+    color: #60450b;
+    font-weight: bold;
+    padding: 10px 32px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 4px #f1deb3c9;
+    cursor: pointer;
+    transition: background 0.18s;
+    font-size: 1.01em;
+    white-space: nowrap;
+    max-width: 130px;
+}
+.ok-btn:hover {
+    background: #ffeed4;
+}
+.btn-link {
+    display: inline-block;
+    padding: 6px 22px;
+    font-size: 14px;
+    color: #0b66c3;
+    background: #f5f5f5;
+    border: 1px solid #b8d2f6;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.btn-link:hover, .btn-link:active, .btn-link:focus {
+    background: #e6f0fa;
+    color: #004085;
+    border: 1px solid #6cb4f6;
+}
+
+/* Pokaż disabled w sposób wyraźny */
+input[disabled], select[disabled], textarea[disabled] {
+    background: #f6f6f6 !important;
+    color: #a1a1a1 !important;
+    cursor: not-allowed;
+    border-color: #cccccc;
+    opacity: 1;  /* Przydatne jeśli coś ustawia opacity na 0.5 lub inne */
+}
+
+.btn-link2 {
+    float: right;
+    padding: 12px 22px;
+    font-size:30px;
+    color: #0b66c3;
+    background: #f5f5f5;
+    border: 3px solid #b8d2f6;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.btn-link3 {
+    float: left;
+    padding: 12px 22px;
+    font-size: 30px;
+    color: #0b66c3;
+    background: #f5f5f5;
+    border: 3px solid #b8d2f6;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+/* np. w form_style.css */
+label.required::after {
+    content: " *";
+    color: #d00;
+    margin-left: 2px;
+    font-weight: bold;
+}
+
+
+
+

@@ -1,0 +1,76 @@
+.honey-table-container {
+    background: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    max-width: 1100px;    /* <-- Tu zmieniłem z 600px na 1100px */
+    margin: 24px auto;
+    border: 2px solid #007be8;
+    /* overflow-x: auto; usunięte, bo już niepotrzebne */
+}
+
+.honey-table {
+    width: 100%;               /* Tabela rozciąga się do szerokości kontenera */
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    border: 2px solid #007be8; /* niebieska ramka tabeli */
+
+}
+
+.honey-table th, .honey-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap; /* opcjonalnie, jeśli nie chcesz łamania w komórkach */
+}
+
+.honey-table th {
+    background: #f2f2f2;
+    font-weight: 600;
+}
+
+.honey-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.honey-table td:last-child, .honey-table th:last-child {
+    width: 140px;
+    text-align: center;
+}
+
+.search-form {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin: 24px 0 0 0;
+    max-width: 380px;
+
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #f6cd5b;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #e6b400;
+}
+
+.search-form button {
+    padding: 8px 18px;
+    background: #ffcc00;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.search-form button:hover {
+    background: #e6b400;
+}
