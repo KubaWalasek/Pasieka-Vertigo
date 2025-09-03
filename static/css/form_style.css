@@ -146,7 +146,13 @@ input[disabled], select[disabled], textarea[disabled] {
     text-decoration: none;
     transition: background 0.2s, color 0.2s, border 0.2s;
 }
-/* ... koniec istniejącego pliku ... */
+/* np. w form_style.css */
+label.required::after {
+    content: " *";
+    color: #d00;
+    margin-left: 2px;
+    font-weight: bold;
+}
 
 
 
