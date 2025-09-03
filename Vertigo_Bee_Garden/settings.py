@@ -25,16 +25,11 @@ SECRET_KEY = 'django-insecure-i877+455yyolpr@$_sympt#b182&gk&)4+r(jy%nrc+wre@^c8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "")
-if ALLOWED_HOSTS:
-    ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS.split(",") if h.strip()]
-else:
-    ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["pasieka-vertigo.onrender.com"]
 
-# CSRF_TRUSTED_ORIGINS także z ENV (pełne adresy z https://, rozdzielone przecinkami)
-_CSRF_TRUSTED = os.getenv("CSRF_TRUSTED_ORIGINS", "")
-if _CSRF_TRUSTED:
-    CSRF_TRUSTED_ORIGINS = [u.strip() for u in _CSRF_TRUSTED.split(",") if u.strip()]
+# CSRF musi mieć pełny URL z https://
+CSRF_TRUSTED_ORIGINS = ["https://pasieka-vertigo.onrender.com"]
+
 
 
 
