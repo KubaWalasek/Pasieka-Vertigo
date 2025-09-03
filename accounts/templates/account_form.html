@@ -6,12 +6,6 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-        {% if form.errors %}
-          <div class="alert alert-danger">
-            {{ form.errors }}
-          </div>
-        {% endif %}
-
             {% if url == 'user_account' %}
                 <input type="submit" value="UPDATE">
             {% elif url == 'register' %}
@@ -21,7 +15,6 @@
             {% endif %}
         </form>
     </div>
-
     {% if message %}
         <div class="center-message">
             <div class="message-box">

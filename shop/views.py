@@ -216,6 +216,7 @@ class SendOrderView(View):
             cart_item.total_price = total_line_price
 
         if form.is_valid():
+            user.email = form.cleaned_data['email']
             user_profile.first_name = form.cleaned_data['first_name']
             user_profile.last_name = form.cleaned_data['last_name']
             user_profile.post_code = form.cleaned_data['post_code']

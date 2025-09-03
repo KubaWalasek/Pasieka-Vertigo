@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 ######################################################################################################
 
 class RegisterUserForm(forms.ModelForm):
+    required_css_class = 'required'
     username = forms.CharField(required=True)
     password_1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
     password_2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput, required=True)
@@ -60,6 +61,7 @@ class UpdateUserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].disabled = True
         self.fields['username'].widget.attrs['readonly'] = True  # tu ustawiamy readonly
 
     def clean(self):
