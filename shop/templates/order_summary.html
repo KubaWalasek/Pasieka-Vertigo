@@ -8,78 +8,80 @@
     <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
     <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
 </head>
-
 <body>
-<div>{% include 'login_logout_links.html' %}</div>
-<div class='links' style="text-align: center;">
-        <a href='{% url 'home' %}'>
-            <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
-        </a>
-</div>
-<div>
-    <h1> Data zamówienia  {{ current_date }} </h1>
+{% include 'login_logout_links.html' %}
+
+
+<h1 class="date-corner">Data zamówienia {{ current_date }}</h1>
+<div class="home-link">
+    <a href="{% url 'home' %}">
+        <img src="{% static 'images/home.jpg' %}" alt="STRONA GŁÓWNA" class="home-icon">
+    </a>
 </div>
 
 <div class="honey-table-container">
-<h2 style="margin-bottom: 18px; text-align: center;">PODSUMOWANIE</h2>
+    <h2 style="margin-bottom: 18px; text-align: center;">PODSUMOWANIE</h2>
 
-<table class="honey-table">
-    <tr>
-        <th>#</th>
-        <th>Użytkownik</th>
-        <th>Produkt/Miód</th>
-        <th>Ilość</th>
-        <th>Cena</th>
-        <th>Łącznie</th>
-    </tr>
-    {% if user.is_authenticated %}
-    {% for item in items %}
+    <table class="honey-table">
         <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ item.user }}</td>
-            <td>
-                {% if item.product %}
-                    {{ item.product }}
-                {% elif item.honey %}
-                    {{ item.honey }}
-                {% endif %}
-            </td>
-            <td>{{ item.quantity }}</td>
-            <td>{% if item.product %}
-                    {{ item.product.price }} PLN
-                {% elif item.honey %}
-                    {{ item.honey.price }} PLN
-                {% endif %}
-            </td>
-            <td>{{ item.total }} PLN
-            </td>
+            <th>#</th>
+            <th>Użytkownik</th>
+            <th>Produkt/Miód</th>
+            <th>Ilość</th>
+            <th>Cena</th>
+            <th>Łącznie</th>
         </tr>
-    {% empty %}
-        <tr>
-            <td colspan="4" style="text-align: center;">Brak produktów w koszyku.</td>
-        </tr>
-    {% endfor %}
-         <tr>
-            <td colspan="5" style="text-align:right;"><strong>Całkowity koszt:</strong></td>
-            <td><strong>{{ total_cart }} PLN</strong></td>
-        </tr>
-{% endif %}
-</table>
-<div><a href='{% url 'send_order' %}' class="btn-link2">ZAMAWIAM</a></div>
-<div><a href="{% url 'cart' %}" class="btn-link3">POWRÓT DO KOSZYKA</a></div>
+        {% if user.is_authenticated %}
+            {% for item in items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.user }}</td>
+                    <td>
+                        {% if item.product %}
+                            {{ item.product }}
+                        {% elif item.honey %}
+                            {{ item.honey }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        {% if item.product %}
+                            {{ item.product.price }} PLN
+                        {% elif item.honey %}
+                            {{ item.honey.price }} PLN
+                        {% endif %}
+                    </td>
+                    <td>{{ item.total }} PLN</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">Brak produktów w koszyku.</td>
+                </tr>
+            {% endfor %}
+            <tr class="summary-cost-row">
+                <td colspan="5" style="text-align:right;"><strong>Całkowity koszt:</strong></td>
+                <td><strong class="summary-final-cost">{{ total_cart }} PLN</strong></td>
+            </tr>
+        {% endif %}
+    </table>
 
-{% if message %}
+    <div class="order-summary-actions">
+        <a href='{% url 'send_order' %}' class="btn-link2 order-summary-btn">ZAMAWIAM</a>
+        <a href="{% url 'cart' %}" class="order-summary-btn btn-link3">POWRÓT DO KOSZYKA</a>
+    </div>
+
+    {% if message %}
         <div class="center-message">
             <div class="message-box {{ message.tags }}">
                 <div class="message-text">
                     {{ message }}
                 </div>
-                 <div class="message-actions">
+                <div class="message-actions">
                     <a href="{% url 'cart' %}" class="action-btn">OK</a>
                 </div>
             </div>
         </div>
-{% endif %}
+    {% endif %}
 </div>
 </body>
 </html>
