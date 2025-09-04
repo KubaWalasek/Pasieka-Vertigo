@@ -6,7 +6,6 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
     min-height: 100vh;
-    /* Opcjonalny półprzezroczysty overlay na całe tło */
 }
 body::before {
     content: "";
@@ -16,12 +15,12 @@ body::before {
     background: rgba(250, 244, 220, 0.69);
     pointer-events: none;
 }
-/* Teraz cała zawartość będzie ponad overlay */
 body > * {
     position: relative;
     z-index: 1;
 }
 
+/* Nagłówek */
 h1 {
     color: #ffff;
     font-size: 75px;
@@ -32,6 +31,7 @@ h1 {
     text-shadow: 20px 20px 20px #0a0a23;
 }
 
+/* Sekcja ikon dzi&iogon; "links" (menu główne) */
 .links {
     display: flex;
     justify-content: center;
@@ -39,7 +39,6 @@ h1 {
     margin: 40px 0;
     gap: 60px;
 }
-
 .links a img {
     width: 150px;
     height: 150px;
@@ -48,11 +47,9 @@ h1 {
     box-shadow: 0 2px 10px #0002;
     transition: transform 1.2s;
 }
-
 .links a img:hover {
     transform: scale(1.15);
 }
-
 .link-box {
     text-align: center;
 }
@@ -66,6 +63,8 @@ h1 {
     border-radius: 6px;
     letter-spacing: 1px;
 }
+
+/* Logowanie/wylogowanie */
 .links_login {
     position: absolute;
     top: 20px;
@@ -98,4 +97,52 @@ h1 {
     background: #f5e8d2;
     padding: 5px 5px;
     border-radius: 6px;
+}
+
+/* Data w lewym górnym rogu */
+.date-corner {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    font-size: 1.38em;
+    color: #b06d12;
+    font-style: italic;
+    background: #fffdfaee;
+    box-shadow: 0 2px 8px #e9c76312;
+    padding: 7px 18px 7px 15px;
+    border-radius: 9px;
+    z-index: 111;
+    letter-spacing: 0.5px;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+@media (max-width: 600px) {
+    .date-corner {
+        font-size: 1em;
+        left: 7px;
+        top: 7px;
+        padding: 6px 12px 6px 10px;
+    }
+}
+
+/* Ikona strony domowej (home) - NA ŚRODKU - większa niż login/logout, mniejsza niż w .links */
+.home-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 10px;
+}
+.home-icon {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 2px 18px #eedc9962;
+    transition: box-shadow .20s, transform .18s;
+    display: inline-block;
+}
+.home-icon:hover {
+    box-shadow: 0 5px 32px #eedc9946;
+    transform: scale(1.09);
 }

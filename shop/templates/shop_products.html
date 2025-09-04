@@ -9,12 +9,14 @@
 <body>
 <div>
     {% include 'login_logout_links.html' %}
-    <div class='links' style="text-align: center;">
-        <a href='{% url 'home' %}'>
-            <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
-        </a>
+ <div class="home-link">
+    <a href="{% url 'home' %}">
+        <img src="{% static 'images/home.jpg' %}" alt="STRONA GŁÓWNA" class="home-icon">
+    </a>
 </div>
-    <h1> Dzisiaj  {{ current_date }} </h1>
+
+    <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
+
 </div>
 
 {% load static %}
