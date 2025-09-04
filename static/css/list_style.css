@@ -3,50 +3,41 @@
     padding: 10px 16px;
     border-radius: 10px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    max-width: 1100px;    /* <-- Tu zmieniłem z 600px na 1100px */
+    max-width: 1100px;
     margin: 24px auto;
     border: 2px solid #007be8;
-    /* overflow-x: auto; usunięte, bo już niepotrzebne */
 }
 
 .honey-table {
-    width: 100%;               /* Tabela rozciąga się do szerokości kontenera */
+    width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    border: 2px solid #007be8; /* niebieska ramka tabeli */
-
+    border: 2px solid #007be8;
 }
-
 .honey-table th, .honey-table td {
     border: 1px solid #e0e0e0;
     padding: 10px 12px;
     text-align: left;
-    white-space: nowrap; /* opcjonalnie, jeśli nie chcesz łamania w komórkach */
+    white-space: nowrap;
 }
-
 .honey-table th {
     background: #f2f2f2;
     font-weight: 600;
 }
-
 .honey-table tr:nth-child(even) {
     background: #fafafa;
 }
-
 .honey-table td:last-child, .honey-table th:last-child {
     width: 140px;
     text-align: center;
 }
-
 .search-form {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
     margin: 24px 0 0 0;
     max-width: 380px;
-
 }
-
 .search-form input[type="text"] {
     flex: 1;
     padding: 8px;
@@ -56,11 +47,9 @@
     outline: none;
     transition: border-color 0.2s;
 }
-
 .search-form input[type="text"]:focus {
     border-color: #e6b400;
 }
-
 .search-form button {
     padding: 8px 18px;
     background: #ffcc00;
@@ -73,4 +62,91 @@
 }
 .search-form button:hover {
     background: #e6b400;
+}
+
+/* USUNIĘTA sekcja body !!! */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    margin: 30px auto 40px auto;
+    max-width: 1280px;
+    padding: 10px;
+}
+.product-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 22px rgba(140, 90, 10, 0.11);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+}
+.product-card:hover {
+    transform: translateY(-7px) scale(1.035);
+    box-shadow: 0 16px 38px rgba(184, 110, 19, 0.17);
+}
+.product-image {
+    background: #fffbe7;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product-image img {
+    max-height: 140px;
+    max-width: 90%;
+    object-fit: contain;
+}
+.product-details {
+    padding: 18px 16px 15px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.product-details h3 {
+    font-size: 1.19em;
+    margin: 0 0 8px 0;
+    color: #b06d12;
+}
+.product-price {
+    font-size: 1.25em;
+    color: #d87d1a;
+    font-weight: bold;
+    margin: 12px 0;
+}
+button {
+    background: linear-gradient(90deg, #ffc739 70%, #ffd97e 100%);
+    color: #6c4207;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 0;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background .17s, color .13s;
+    box-shadow: 0 2px 7px #ffecaa66;
+}
+button:hover {
+    background: linear-gradient(90deg, #ff9900 70%, #ffd97e 100%);
+    color: #fff;
+}
+.empty-text {
+    grid-column: 1/-1;
+    text-align: center;
+    color: #888;
+    font-size: 1.2em;
+    margin: 60px 0;
+}
+@media (max-width: 600px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .product-image {
+        height: 120px;
+    }
 }

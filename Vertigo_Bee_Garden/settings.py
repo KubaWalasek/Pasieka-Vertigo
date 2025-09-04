@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-i877+455yyolpr@$_sympt#b182&gk&)4+r(jy%nrc+wre@^c8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["pasieka-vertigo.onrender.com"]
+ALLOWED_HOSTS = ["pasieka-vertigo.onrender.com", "127.0.0.1"]
 
 # CSRF musi mieć pełny URL z https://
 CSRF_TRUSTED_ORIGINS = ["https://pasieka-vertigo.onrender.com"]
