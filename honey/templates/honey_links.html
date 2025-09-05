@@ -1,36 +1,36 @@
 {% load static %}
 <div class="links">
     {% if user.is_authenticated %}
-    <div style="text-align: center;">
-        <a href="{% url 'honey_taste' %}">
-            <img src="{% static 'images/smaki.jpg' %}" alt="honeys" title="DODAJ SMAK">
-        </a>
-        <div class="link-label">Dodaj smak</div>
-    </div>
-    <div style="text-align: center;">
-        <a href="{% url 'honey_type' %}">
-            <img src="{% static 'images/variant.webp' %}" alt="honey_type" title="DODAJ VARIANT">
-        </a>
-        <div class="link-label">Dodaj wariant</div>
-    </div>
-    <div style="text-align: center;">
-        <a href="{% url 'honey_variant' %}">
-            <img src="{% static 'images/typ.jpg' %}" alt="honey_variant" title="DODAJ TYP">
-        </a>
-        <div class="link-label">Dodaj typ</div>
-    </div>
-    <div style="text-align: center;">
-        <a href="{% url 'honey_offer' %}">
-            <img src="{% static 'images/oferty.jpg' %}" alt="honey_offer" title="DODAJ OFERTĘ">
-        </a>
-        <div class="link-label">Dodaj ofertę</div>
-    </div>
-     <div style="text-align: center;">
-        <a href="{% url 'add_product' %}">
-            <img src="{% static 'images/bee_product.webp' %}" alt="bee_products" title="DODAJ PRODUKT">
-        </a>
-        <div class="link-label">Dodaj produkt</div>
-    </div>
+        <div style="text-align: center;">
+            <a href="{% url 'honey_taste' %}">
+                <img src="{% static 'images/smaki.jpg' %}" alt="honeys" title="DODAJ SMAK">
+            </a>
+            <div class="link-label">Dodaj smak</div>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'honey_type' %}">
+                <img src="{% static 'images/variant.webp' %}" alt="honey_type" title="DODAJ VARIANT">
+            </a>
+            <div class="link-label">Dodaj wariant</div>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'honey_variant' %}">
+                <img src="{% static 'images/typ.jpg' %}" alt="honey_variant" title="DODAJ TYP">
+            </a>
+            <div class="link-label">Dodaj typ</div>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'honey_offer' %}">
+                <img src="{% static 'images/oferty.jpg' %}" alt="honey_offer" title="DODAJ OFERTĘ">
+            </a>
+            <div class="link-label">Dodaj ofertę</div>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'add_product' %}">
+                <img src="{% static 'images/bee_product.webp' %}" alt="bee_products" title="DODAJ PRODUKT">
+            </a>
+            <div class="link-label">Dodaj produkt</div>
+        </div>
     {% endif %}
     <div style="text-align: center;">
         <a href="{% url 'honey_list' %}">

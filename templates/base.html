@@ -7,12 +7,29 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
 </head>
+
 <body>
-{% include 'accounts_links.html' %}
 <div>
-    <h1> Dzisiaj  {{ current_date }} </h1>
+    <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
 </div>
-{% include 'links.html' %}
+
+
+<div class="links_login">
+    {% include 'accounts_links.html' %}
+</div>
+{%  block links %}
+<div class="center-menu">
+    <a href="{% url 'honeys' %}" class="big-card">
+        <img src="{% static 'images/honey.jpg' %}" alt="Miody">
+        <span>Miody</span>
+    </a>
+    <a href="{% url 'shop_products' %}" class="big-card">
+        <img src="{% static 'images/bee_product.webp' %}" alt="Sklep">
+        <span>Sklep</span>
+    </a>
+</div>
+{% endblock %}
+
 
 {% if messages %}
     {% for message in messages %}

@@ -1,31 +1,107 @@
 {% extends 'base.html' %}
+{% block links %}{% endblock %}
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
-    <div class="form-container">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if url == 'user_account' %}
-                <input type="submit" value="UPDATE">
-            {% elif url == 'register' %}
-                <input type="submit" value="REGISTER">
-            {% else %}
-                <input type="submit" value="LOG IN">
-            {% endif %}
-        </form>
-    </div>
-    {% if message %}
-        <div class="center-message">
-            <div class="message-box">
-                <div class="message-text">
-                    {{ message }}
-                </div>
+    <div class="form-hero">
+        <a href="{% url 'home' %}" class="back-home">
+            ← Powrót na stronę domową
+        </a>
+        {% if url == 'login' %}
+            <div class="form-card">
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <h2 class="form-title">Logowanie</h2>
+                    <div class="form-row">
+                        {{ form.username.label_tag }}{{ form.username }}
+                    </div>
+                    <div class="form-row">
+                        {{ form.password.label_tag }}{{ form.password }}
+                    </div>
+                    <button type="submit" class="big-form-btn">ZALOGUJ SIĘ</button>
+                    {% if message %}
+                        <div class="center-message" style="margin-top:24px;">
+                            <div class="message-box">
+                                <div class="message-text">{{ message }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
             </div>
-        </div>
-    {% endif %}
+        {% else %}
+            <div class="form-card form-card-flex">
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <h2 class="form-title">
+                        {% if url == 'register' %}
+                            Rejestracja konta
+                        {% elif url == 'user_account' %}
+                            Edycja konta
+                        {% else %}
+                            Logowanie
+                        {% endif %}
+                    </h2>
+                    <div class="form-sections-row">
+                        <div class="form-section">
+                            <h3>Dane osobowe</h3>
+                            <div class="form-row">
+                                {{ form.first_name.label_tag }}{{ form.first_name }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.last_name.label_tag }}{{ form.last_name }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.username.label_tag }}{{ form.username }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.email.label_tag }}{{ form.email }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.password_1.label_tag }}{{ form.password_1 }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.password_2.label_tag }}{{ form.password_2 }}
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <h3>Dane adresowe</h3>
+                            <div class="form-row">
+                                {{ form.city.label_tag }}{{ form.city }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.post_code.label_tag }}{{ form.post_code }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.street.label_tag }}{{ form.street }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.street_number.label_tag }}{{ form.street_number }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.door_number.label_tag }}{{ form.door_number }}
+                            </div>
+                            <div class="form-row">
+                                {{ form.phone_number.label_tag }}{{ form.phone_number }}
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="big-form-btn">
+                        {% if url == 'user_account' %}
+                            ZAPISZ ZMIANY
+                        {% elif url == 'register' %}
+                            UTWÓRZ KONTO
+                        {% else %}
+                            ZALOGUJ SIĘ
+                        {% endif %}
+                    </button>
+                    {% if message %}
+                        <div class="center-message" style="margin-top:24px;">
+                            <div class="message-box">
+                                <div class="message-text">{{ message }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
-
-
-
-

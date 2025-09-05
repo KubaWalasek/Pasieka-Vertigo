@@ -46,6 +46,7 @@ class LoginView(View):
         form = LoginUserForm()
         return render(request, 'account_form.html', {
             'form': form,
+            'url': 'login'
         })
 
     def post(self, request):
@@ -57,7 +58,8 @@ class LoginView(View):
             if request.user.is_authenticated and request.user.username == username and user is not None :
                 return render(request, 'account_form.html', {
                     'form': form,
-                    'message': 'You are already logged in !'
+                    'message': 'You are already logged in !',
+                    'url': 'login'
                 })
 
             if user is not None:
@@ -67,9 +69,12 @@ class LoginView(View):
             else:
                 return render(request, 'account_form.html', {
                     'form': form,
-                    'message': 'Invalid username or password !'})
+                    'message': 'Invalid username or password !',
+                    'url': 'login'
+                })
         return render(request, 'account_form.html', {
             'form': form,
+            'url': 'login'
         })
 
 ######################################################################################################
