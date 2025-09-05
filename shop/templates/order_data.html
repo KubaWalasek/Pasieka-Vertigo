@@ -11,11 +11,7 @@
 
 <body>
 <div>{% include 'login_logout_links.html' %}</div>
-<div class='links' style="text-align: center;">
-        <a href='{% url 'home' %}'>
-            <img src="{% static 'images/home.jpg' %}" alt="home_picture" title="STRONA GŁÓWNA">
-        </a>
-</div>
+ {% include 'links.html' %}
 <div>
     <h1> Data zamówienia  {{ current_date }} </h1>
 </div>

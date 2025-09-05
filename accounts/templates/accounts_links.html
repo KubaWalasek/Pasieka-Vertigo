@@ -1,34 +1,27 @@
 {% load static %}
-<div class="links">
-    <div style="text-align: center;">
+<div class="links_login">
+    <div>
+        {% if not user.is_authenticated %}
         <a href='{% url 'login' %}'>
             <img src="{% static 'images/login.jpeg' %}" alt="login" title="LOGIN">
         </a>
-            <div class="link-label">LOGIN</div>
-        </div>
-
-    <div style="text-align: center;">
+        {% endif %}
+    </div>
+    <div>
+        {% if not user.is_authenticated %}
         <a href='{% url 'register' %}'>
             <img src="{% static 'images/register.jpeg' %}" alt="register" title="REGISTER">
         </a>
-            <div class="link-label">REGISTER</div>
+        {% endif %}
     </div>
-
-    <div style="text-align: center;">
+    <div>
         <a href='{% url 'logout' %}'>
             <img src="{% static 'images/logout.jpeg' %}" alt="logout" title="LOGOUT">
         </a>
-            <div class="link-label">LOGOUT</div>
-        </div>
-
-    <div style="text-align: center;">
+    </div>
+    <div>
         <a href='{% url 'user_account' %}'>
-            <img src="{% static 'images/user.png' %}" alt="user" title="KONTO">
+            <img src="{% static 'images/user.jpeg' %}" alt="user" {% if user.is_authenticated %}title="{{ user.username }}"{% else %}title="Not logged in"{% endif %}>
         </a>
-        {% if user.is_authenticated %}
-            <div class="link-label">{{ user.username }}</div>
-            {% else %}
-                <div class="link-label">NIEZALOGOWANY</div>
-            {% endif %}
-        </div>
+    </div>
 </div>

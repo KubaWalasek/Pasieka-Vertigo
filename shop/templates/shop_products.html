@@ -9,11 +9,7 @@
 <body>
 <div>
     {% include 'login_logout_links.html' %}
- <div class="home-link">
-    <a href="{% url 'home' %}">
-        <img src="{% static 'images/home.jpg' %}" alt="STRONA GŁÓWNA" class="home-icon">
-    </a>
-</div>
+    {% include 'links.html' %}
 
     <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
 
@@ -34,7 +30,31 @@
         {% for honey in honeys %}
             <div class="product-card">
                 <div class="product-image">
-                    <img src="{% static 'images/honey.jpg' %}" alt="Miód {{ honey.taste }}">
+                    {% with taste=honey.taste.taste %}
+                        {% if taste == 'Akacja' %}
+                            <img src="{% static 'images/akacjowy.webp' %}" alt="Miód Akacjowy">
+                        {% elif taste == 'Rzepak' %}
+                            <img src="{% static 'images/rzepakowy.jpg' %}" alt="Miód Rzepakowy">
+                        {% elif taste == 'Spadź' %}
+                            <img src="{% static 'images/spadziowy.jpg' %}" alt="Miód Spadziowy">
+                        {% elif taste == 'Facelia' %}
+                            <img src="{% static 'images/faceliowy.webp' %}" alt="Miód Faceliowy">
+                        {% elif taste == 'Gryka' %}
+                            <img src="{% static 'images/gryczany.jpg' %}" alt="Miód Gryczany">
+                        {% elif taste == 'Lipa' %}
+                            <img src="{% static 'images/lipowy.jpg' %}" alt="Miód Lipowy">
+                        {% elif taste == 'Malina' %}
+                            <img src="{% static 'images/malinowy.jpeg' %}" alt="Miód Malinowy">
+                        {% elif taste == 'Imbir' %}
+                            <img src="{% static 'images/imbir.jpg' %}" alt="Miód Imbir z cytryną">
+                        {% elif taste == 'Żurawina' %}
+                            <img src="{% static 'images/zurawinowy.jpeg' %}" alt="Miód Żurawinowy">
+                        {% elif taste == 'Porzeczka' %}
+                            <img src="{% static 'images/porzeczkowy.webp' %}" alt="Miód Porzeczkowy">
+                        {% else %}
+                            <img src="{% static 'images/honey.jpg' %}" alt="Miód {{ honey.taste }}">
+                        {% endif %}
+                    {% endwith %}
                 </div>
                 <div class="product-details">
                     <h3>{{ honey.taste }}</h3>
@@ -54,7 +74,17 @@
         {% for product in products %}
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{% static 'images/bee_product.webp' %}" alt="Miód {{ product.taste }}">
+                        {% with name=product.name %}
+                            {% if name == 'Pierzga' %}
+                                <img src="{% static 'images/pierzga.jpg' %}" alt="Pierzga">
+                            {% elif name == "Pyłek" %}
+                                <img src="{% static 'images/pylek.jpg' %}" alt="Pyłek">
+                            {% elif name == "Wosk" %}
+                                <img src="{% static 'images/wosk.jpg' %}" alt="Pyłek">
+                            {% else %}
+                                <img src="{% static 'images/propolis.jpg' %}" alt="Pyłek">
+                            {% endif %}
+                        {% endwith %}
                     </div>
                     <div class="product-details">
                         <h3>{{ product.name }}</h3>

@@ -1,29 +1,21 @@
 {% load static %}
 <div class="links_login">
 
-    <div style="text-align: center;">
+    <div>
         <a href='{% url 'cart' %}'>
             <img src="{% static 'images/koszyk.jpeg' %}" alt="koszyk" title="KOSZYK">
         </a>
             <div class="link_login-label">{% if user.is_authenticated %}
-                {{ items | length }}{% else %}KOSZYK{% endif %}</div>
-        </div>
-    <div style="text-align: center;">
-        <a href='{% url 'login' %}'>
-            <img src="{% static 'images/login.jpeg' %}" alt="login" title="LOGIN">
+                {{ items | length }}{% endif %}</div>
+   </div>
+   <div>
+        <a href='{% url 'user_account' %}'>
+            <img src="{% static 'images/user.jpeg' %}" alt="user" {% if user.is_authenticated %}title="{{ user.username }}"{% else %}title="Not logged in"{% endif %}>
         </a>
-            {% if user.is_authenticated %}
-                <div class="link_login-label">{{ user.username }}</div>
-            {% else %}
-                <div class="link_login-label">LOGIN</div>
-            {% endif %}
-
-        </div>
-
-        <div style="text-align: center;">
+    </div>
+   <div>
         <a href='{% url 'logout' %}'>
             <img src="{% static 'images/logout.jpeg' %}" alt="logout" title="LOGOUT">
         </a>
-            <div class="link_login-label">LOGOUT</div>
-        </div>
+   </div>
 </div>
