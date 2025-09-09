@@ -6,7 +6,7 @@
             <img src="{% static 'images/koszyk.jpeg' %}" alt="koszyk" title="KOSZYK">
         </a>
             <div class="link_login-label">{% if user.is_authenticated %}
-                {{ items | length }}{% endif %}</div>
+                <strong>{{ items | length }} szt.{% endif %}</strong></div>
    </div>
    <div>
         <a href='{% url 'user_account' %}'>

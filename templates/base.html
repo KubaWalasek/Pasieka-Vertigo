@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
 </head>
-
 <body>
-<div>
+<div class="corner-box">
     <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
+    {%  block weather %}{% include 'weather_widget.html' %}{% endblock %}
 </div>
 
 

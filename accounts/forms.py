@@ -19,13 +19,27 @@ class RegisterUserForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=15, required=False)
 
 
+
+
+
+    def clean_password_1(self):
+        password_1 = self.cleaned_data.get('password_1')
+        if password_1 is None:
+            return
+        if len(password_1) < 8:
+            raise forms.ValidationError('Password must be at least 8 characters long.')
+        if not any(c.isupper() for c in password_1):
+            raise forms.ValidationError('Password must contain at least one uppercase letter.')
+        return password_1
+
     def clean(self):
         cleaned_data = super().clean()
         password_1 = cleaned_data.get('password_1')
         password_2 = cleaned_data.get('password_2')
 
-        if password_1 != password_2:
-            raise forms.ValidationError('Passwords do not match')
+        # jeśli password_1 ma błędy - nie porównuj
+        if password_1 and password_2 and password_1 != password_2:
+            raise forms.ValidationError('Passwords do not match !')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

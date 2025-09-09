@@ -1,0 +1,14 @@
+<div class="weather-widget">
+    {% if weather.error %}
+        <div class="weather-error">{{ weather.error }}</div>
+    {% else %}
+        <div class="weather-top">
+            <span class="weather-city">{{ weather.city }}</span>
+            <img class="weather-icon" src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="ikona pogody">
+        </div>
+        <div class="weather-main">
+            <span class="weather-temp">{{ weather.temp|floatformat:1 }}°C</span>
+        </div>
+        <div class="weather-desc">{{ weather.description|capfirst }}</div>
+    {% endif %}
+</div>

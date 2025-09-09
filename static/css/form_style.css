@@ -146,3 +146,12 @@ label.required::after {
     font-weight: bold;
 }
 /* USUNIĘTO styl body! */
+.form-error {
+    color: #d70000;
+    background: #ffeaea;
+    border: 1px solid #c21a00;
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 4px;
+    font-weight: bold;
+}

@@ -37,7 +37,8 @@ class RegisterView(View):
             return redirect('user_account')
         return render(request, 'account_form.html', {
             'form': form,
-            'url': 'register'
+            'url': 'register',
+
         })
 
 ######################################################################################################
