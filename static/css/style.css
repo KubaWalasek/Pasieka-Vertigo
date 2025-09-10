@@ -470,8 +470,16 @@ label.required::after {
     background-clip: padding-box;
 }
 @media (max-width: 800px) {
-    .main-logo { padding:12px 4vw;font-size:1.4em;}
+    .main-logo {
+        margin: 14px auto 8px auto;   /* mały margines! */
+        padding: 14px 4vw 12px 4vw;   /* mniejszy padding */
+        font-size: 1.25em;
+    }
 }
 @media (max-width: 500px) {
-    .main-logo { padding:7px 1vw; font-size:1em; }
+    .main-logo {
+        margin: 7px auto 5px auto;
+        padding: 7px 1vw 5px 1vw;
+        font-size: 1em;
+    }
 }
