@@ -10,11 +10,15 @@
 </head>
 
 <body>
-<div>{% include 'login_logout_links.html' %}</div>
- {% include 'links.html' %}
-  <div class="corner-box">
-    <h1 class="date-corner">Data zamówienia :  {{ current_date }}</h1>
+<div>
+    {% include 'login_logout_links.html' %}
+    {% include 'links.html' %}
+
+     <div class="corner-box">
+    <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
     </div>
+
+</div>
 
 <div class="honey-table-container">
 <h2 style="margin-bottom: 18px; text-align: center;">DANE DO ZAMÓWIENIA</h2>
