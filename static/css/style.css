@@ -13,7 +13,7 @@ body::before {
     position: fixed;
     z-index: 0;
     left: 0; top: 0; right: 0; bottom: 0;
-    background: rgba(250, 244, 220, 0.69);
+    background: rgba(250, 244, 220, 0.3);
     pointer-events: none;
 }
 body > * {
@@ -378,7 +378,7 @@ label.required::after {
 .weather-widget {
     margin: 0;
     max-width: 320px;
-    background: #f5faff;
+    background: linear-gradient(120deg, #fffde9 60%, #ffeec0 100%);
     border-radius: 16px;
     padding: 16px 18px 14px 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -392,15 +392,15 @@ label.required::after {
 }
 
 .weather-city {
-    font-size: 1.1em;
+    font-size: 1.6em;
     font-weight: bold;
     color: #254463;
     letter-spacing: 0.5px;
 }
 
 .weather-icon {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
     margin-left: 8px;
 }
 
@@ -413,7 +413,7 @@ label.required::after {
 
 .weather-desc {
     margin-top: 6px;
-    color: #333;
+    color: #000dff;
     font-size: 2em;
     text-align: center;
     font-style: italic;

@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block links %}{% endblock %}
 {% block weather %}{% endblock %}
+{% block logo %}{% endblock %}
 {% block content %}
     {% load static %}
     <div class="form-hero">
-        <a href="{% url 'home' %}" class="back-home">
-            ← Powrót na stronę domową
-        </a>
+        {% include 'links.html' %}
         {% if url == 'login' %}
             <div class="form-card">
                 <form method="POST" autocomplete="off">

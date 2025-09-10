@@ -12,7 +12,40 @@
     <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
     {%  block weather %}{% include 'weather_widget.html' %}{% endblock %}
 </div>
-
+{% block logo %}
+    <div style="
+    position: absolute;
+    left: 50%;
+    top: 140px;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 30px 28px 25px 28px;
+    max-width: 700px;
+    background: linear-gradient(130deg, #fffbe0 65%, #f9ce35 110%);
+    border-radius: 38px 11px 39px 19px;
+    box-shadow: 0 14px 48px #eca73e5c, 0 3px 24px #ebe2b159;
+    border: 2.3px solid #ffde8e;
+    text-align: center;
+    font-family: 'Segoe UI', Arial, sans-serif;"
+    >
+    <span style="
+        font-size: 2.9em;
+        font-weight: 900;
+        color: #af8332;
+        text-shadow: 0 2px 17px #fff9b983, 0 2px 7px #e3aa2933;
+        letter-spacing: 0.08em;
+        font-style: italic;
+        line-height: 1.1;
+        ">
+        🐝&nbsp;Witamy w Pasiece Vertigo!&nbsp;<span style="color: #ffc107;">🍯</span>
+    </span>
+        <br>
+        <span style="display:block; margin-top: 12px; color:#ad741a; font-size:1.25em; font-weight:500;">
+        Najlepsze miody i produkty prosto z naszej pasieki.<br>
+        Rozgość się i odkryj nasze słodkie skarby!
+    </span>
+    </div>
+{% endblock %}
 
 <div class="links_login">
     {% include 'accounts_links.html' %}
