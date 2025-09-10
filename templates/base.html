@@ -2,23 +2,18 @@
 <html lang='pl'>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pasieka Vertigo</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
 </head>
 <body>
-
+{% include 'login_logout_links.html' %}
 <div class="corner-box">
     <h1 class="date-corner">Dzisiaj {{ current_date }}</h1>
     {% block weather %}{% include 'weather_widget.html' %}{% endblock %}
-</div>
 
-<div class="links_login">
-    {% include 'accounts_links.html' %}
 </div>
-
 {% block logo %}
     <h2 class="main-logo">
         🐝&nbsp;Witamy w Pasiece Vertigo!&nbsp;<span style="color: #ffc107;">🍯</span>
