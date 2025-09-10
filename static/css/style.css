@@ -34,7 +34,7 @@ h1 {
 
 /* === KAFLE NA STRONIE GŁÓWNEJ === */
 .center-menu {
-    height: 100vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -449,4 +449,29 @@ label.required::after {
     margin: 5px;
 
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+.main-logo {
+    margin: 48px auto 8px auto;
+    max-width: 740px;
+    padding: 110px 10vw 110px 10vw;
+    font-size: 3.4em;
+    font-weight: 900;
+    color: #af8332;
+    background: linear-gradient(130deg, #fffbe0 65%, #f9ce35 110%);
+    border-radius: 38px 11px 39px 19px;
+    box-shadow: 0 14px 48px #eca73e5c, 0 3px 24px #ebe2b159;
+    border: 2.3px solid #ffde8e;
+    text-align: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-shadow: 0 2px 17px #fff9b983, 0 2px 7px #e3aa2933;
+    background-clip: padding-box;
+}
+@media (max-width: 800px) {
+    .main-logo { padding:12px 4vw;font-size:1.4em;}
+}
+@media (max-width: 500px) {
+    .main-logo { padding:7px 1vw; font-size:1em; }
 }
