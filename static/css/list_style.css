@@ -171,6 +171,8 @@ button:hover {
     border: 2px solid #ffe185;
     box-shadow: 0 4px 18px #ffecb866;
     background: #fffdfa;
+    overflow: visible !important;
+    position: relative;
 }
 
 .cart-qty-row {

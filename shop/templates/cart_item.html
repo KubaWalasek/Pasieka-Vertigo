@@ -27,10 +27,10 @@
         <div class="product-grid">
             {% for item in items %}
                 <div class="product-card cart-card">
-                        <form method="post" action="{% url 'delete_cart_item' item.id %}" style="position: absolute; top: 5px; right: 10px;">
-                            {% csrf_token %}
-                            <button type="submit" class="cart-delete-btn" title="Usuń z koszyka" style="background: transparent; border: none; font-size: 60px; cursor:pointer;">&times;</button>
-                        </form>
+                    <form method="post" action="{% url 'delete_cart_item' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="cart-delete-btn-bg" title="Usuń z koszyka">&times;</button>
+                    </form>
                     <div class="product-image">
                         {% if item.product %}
                              {% with name=item.product.name %}
