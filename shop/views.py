@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -5,9 +6,7 @@ import honey
 from honey.forms import HoneySearchForm
 from honey.models import HoneyOffer, BeeProduct
 from shop.forms import AddToCartHoneyForm, AddToCartBeeProductForm, OrderDataForm
-from shop.models import CartItem
-
-
+from shop.models import CartItem, Order, OrderItem
 
 
 class ShopProductView(View):
@@ -213,12 +212,12 @@ class SendOrderView(View):
 
     def post(self, request):
         user = request.user
-        user_profile = user.userprofile
         form = OrderDataForm(request.POST)
         items_queryset = CartItem.objects.select_related('product', 'honey').filter(user=user)
         items_in_cart = list(items_queryset)
         total_in_cart_price = 0
         total_line_price = 0
+
         for cart_item in items_in_cart:
             if cart_item.honey:
                 price = cart_item.honey.price
@@ -231,23 +230,58 @@ class SendOrderView(View):
             cart_item.total_price = total_line_price
 
         if form.is_valid():
-            user.email = form.cleaned_data['email']
-            user_profile.first_name = form.cleaned_data['first_name']
-            user_profile.last_name = form.cleaned_data['last_name']
-            user_profile.post_code = form.cleaned_data['post_code']
-            user_profile.city = form.cleaned_data['city']
-            user_profile.street = form.cleaned_data['street']
-            user_profile.street_number = form.cleaned_data['street_number']
-            user_profile.door_number = form.cleaned_data['door_number']
-            user_profile.phone_number = form.cleaned_data['phone_number']
-            items_queryset.delete()
-            return render(request, 'order_finished.html', {
-                    'user_profile': user_profile,
-                    'user': user,
-                    'form': form,
-                    'items_in_cart' : items_in_cart,
-                    'total_in_cart_price': total_in_cart_price,
-                    })
+            order = Order.objects.create(
+                user = user,
+                email = form.cleaned_data['email'],
+                first_name = form.cleaned_data['first_name'],
+                last_name = form.cleaned_data['last_name'],
+                post_code = form.cleaned_data['post_code'],
+                city = form.cleaned_data['city'],
+                street = form.cleaned_data['street'],
+                street_number = form.cleaned_data['street_number'],
+                door_number = form.cleaned_data['door_number'],
+                phone_number = form.cleaned_data['phone_number']         ,
+                paid = False,
+                total_price = total_in_cart_price,
+            )
+
+            for cart_item in items_in_cart:
+                product = cart_item.product
+                honey = cart_item.honey
+                if cart_item.honey:
+                    product_name = honey.taste.taste
+                    price = honey.price
+                elif cart_item.product:
+                    product_name = product.name
+                    price = product.price
+                else:
+                    continue
+                quantity = cart_item.quantity
+                OrderItem.objects.create(
+                    order = order,
+                    product_name = product_name,
+                    price = price,
+                    quantity = quantity
+                )
+            CartItem.objects.filter(user=user).delete()
+
+            return redirect( 'order_finished', pk=order.id)
+
+
+class OrderFinishedView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        order_items = OrderItem.objects.filter(order=order)
+
+        return render(request, 'order_finished.html', {
+            'order': order,
+            'order_items': order_items,
+        })
+
+
+
+
+
 
 
 

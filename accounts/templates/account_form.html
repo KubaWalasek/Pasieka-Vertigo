@@ -11,6 +11,9 @@
                 <form method="POST" autocomplete="off">
                     {% csrf_token %}
                     <h2 class="form-title">Logowanie</h2>
+                    {% for error in form.non_field_errors %}
+                     <div class="form-error">{{ error }}</div>
+                    {% endfor %}
                     <div class="form-row">
                         {{ form.username.label_tag }}{{ form.username }}
                     </div>

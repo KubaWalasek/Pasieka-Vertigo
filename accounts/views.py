@@ -34,7 +34,7 @@ class RegisterView(View):
 
                                        )
             messages.success(request, 'Account created successfully!')
-            return redirect('user_account')
+            return redirect('shop_products')
         return render(request, 'account_form.html', {
             'form': form,
             'url': 'register',
@@ -68,9 +68,9 @@ class LoginView(View):
                 next_url = request.GET.get('next', 'home')
                 return redirect(next_url)
             else:
+                messages.error(request, 'Invalid username or password !')
                 return render(request, 'account_form.html', {
                     'form': form,
-                    'message': 'Invalid username or password !',
                     'url': 'login'
                 })
         return render(request, 'account_form.html', {
