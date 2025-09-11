@@ -169,6 +169,21 @@ class UpdateCartItemQuantityView(View):
         return redirect('cart')
 
 
+
+class DeleteCartItemView(View):
+    def post(selfself, request, pk):
+        item_in_cart = CartItem.objects.get(pk=pk, user=request.user)
+        old_quantity = item_in_cart.quantity
+        if item_in_cart.honey:
+            item_in_cart.honey.quantity += old_quantity
+            item_in_cart.honey.save()
+        if item_in_cart.product:
+            item_in_cart.product.quantity += old_quantity
+            item_in_cart.product.save()
+        item_in_cart.delete()
+        return redirect('cart')
+
+
 class OrderSummaryView(View):
     def get(self, request):
         return render(request, 'order_summary.html')
