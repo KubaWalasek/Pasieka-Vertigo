@@ -1,12 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+import stripe
+from django.conf import settings
+from django.http import JsonResponse, HttpResponse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
-import honey
 from honey.forms import HoneySearchForm
 from honey.models import HoneyOffer, BeeProduct
 from shop.forms import AddToCartHoneyForm, AddToCartBeeProductForm, OrderDataForm
 from shop.models import CartItem, Order, OrderItem
+
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class ShopProductView(View):
@@ -276,7 +283,76 @@ class OrderFinishedView(LoginRequiredMixin, View):
         return render(request, 'order_finished.html', {
             'order': order,
             'order_items': order_items,
+            'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY
         })
+
+
+
+class StripeCheckoutSessionView(View):
+    def post(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        line_items = []
+        line_items.append({
+            'price_data': {
+                'currency': 'pln',
+                'product_data': {
+                    'name': 'Zamówienie z pasieki VERTIGO',
+                },
+                'unit_amount': int(order.total_price * 100),  # zamiana zł na grosze
+            },
+            'quantity': 1,
+        })
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['blik'],
+            line_items=line_items,
+            mode='payment',
+            success_url=request.build_absolute_uri(f'/shop/order_finished/{order.id}/'),
+            cancel_url=request.build_absolute_uri(f'/shop/order_finished/{order.id}/'),
+            customer_email=order.email
+        )
+        # Zapisz sobie session_id do zamówienia (może się przydać):
+        order.stripe_session_id = checkout_session.id
+        order.save()
+        return redirect(checkout_session.url)
+
+
+
+@csrf_exempt
+def stripe_webhook_view(request):
+    # Pobierz sekret endpointa z panelu Stripe Webhooks
+    endpoint_secret = settings.STRIPE_ENDPOINT_SECRET
+
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError:
+        # Zły payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        # Zły podpis
+        return HttpResponse(status=400)
+
+    # Obsługo zakończonej płatności Stripe Checkout
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        session_id = session.get('id')
+        # Zakładamy, że order.stripe_session_id == session.id
+        from shop.models import Order
+        try:
+            order = Order.objects.get(stripe_session_id=session_id)
+            order.paid = True
+            order.save()
+        except Order.DoesNotExist:
+            pass # Ewentualnie loguj incydent
+
+    # Stripe wymaga odpowiedzi 200 nawet, gdy nie obsłużysz eventu
+    return HttpResponse(status=200)
+
+
 
 
 

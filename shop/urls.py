@@ -1,7 +1,8 @@
 from django.urls import path
 
 from shop.views import CartItemView, ShopProductView, AddToCartHoneyView, AddToCartProductView, \
-    UpdateCartItemQuantityView, OrderSummaryView, SendOrderView, DeleteCartItemView, OrderFinishedView
+    UpdateCartItemQuantityView, OrderSummaryView, SendOrderView, DeleteCartItemView, OrderFinishedView, \
+    StripeCheckoutSessionView, stripe_webhook_view
 
 urlpatterns = [
     path('cart/', CartItemView.as_view(), name='cart'),
@@ -13,5 +14,7 @@ urlpatterns = [
     path('order_summary/', OrderSummaryView.as_view(),name='order_summary'),
     path('send_order/', SendOrderView.as_view(), name='send_order'),
     path('order_finished/<int:pk>/', OrderFinishedView.as_view(), name='order_finished'),
-    path('cart/delete_item/<int:pk>/', DeleteCartItemView.as_view(), name='delete_cart_item')
+    path('cart/delete_item/<int:pk>/', DeleteCartItemView.as_view(), name='delete_cart_item'),
+    path('stripe-checkout/<int:pk>/', StripeCheckoutSessionView.as_view(), name='stripe_checkout'),
+    path('stripe_webhook/', stripe_webhook_view, name='stripe_webhook')
 ]

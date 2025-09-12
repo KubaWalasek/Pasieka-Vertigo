@@ -60,6 +60,14 @@
 
     <div style="text-align: center; margin-top: 30px;">
         <a href="{% url 'shop_products' %}" class="btn-link3">Wróć do sklepu</a>
+        {% if not order.paid %}
+            <form method="post" action="{% url 'stripe_checkout' order.id %}">
+                {% csrf_token %}
+                <button type="submit">Zapłać teraz przez Stripe</button>
+            </form>
+        {% else %}
+            <p>Zamówienie opłacone. Dziękujemy!</p>
+        {% endif %}
     </div>
 </div>
 </body>
