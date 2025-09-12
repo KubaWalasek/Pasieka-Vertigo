@@ -321,7 +321,9 @@ class StripeCheckoutSessionView(View):
 
 @csrf_exempt
 def stripe_webhook_view(request):
-    # Pobierz sekret endpointa z panelu Stripe Webhooks
+    import stripe
+    from django.conf import settings
+
     endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
     payload = request.body
@@ -332,26 +334,26 @@ def stripe_webhook_view(request):
             payload, sig_header, endpoint_secret
         )
     except ValueError:
-        # Zły payload
+        print("Webhook: ValueError")
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError:
-        # Zły podpis
+        print("Webhook: Signature error")
         return HttpResponse(status=400)
 
-    # Obsługo zakończonej płatności Stripe Checkout
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         session_id = session.get('id')
-        # Zakładamy, że order.stripe_session_id == session.id
+        print("Webhook: otrzymano checkout.session.completed, session_id:", session_id)
         from shop.models import Order
         try:
             order = Order.objects.get(stripe_session_id=session_id)
+            print("Webhook: znaleziono zamówienie id:", order.id)
             order.paid = True
             order.save()
+            print(f"Webhook: order id {order.id} ustawiony na paid=True.")
         except Order.DoesNotExist:
-            pass # Ewentualnie loguj incydent
+            print("Webhook: NIE ZNALEZIONO zamówienia dla session_id:", session_id)
 
-    # Stripe wymaga odpowiedzi 200 nawet, gdy nie obsłużysz eventu
     return HttpResponse(status=200)
 
 
