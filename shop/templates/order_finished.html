@@ -66,7 +66,31 @@
                 <button type="submit">Zapłać teraz przez Stripe</button>
             </form>
         {% else %}
-            <p>Zamówienie opłacone. Dziękujemy!</p>
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                <div style="
+            background: #4BB543;
+            color: white;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            box-shadow: 0 2px 8px #4bb54333;
+        ">
+                    &#10003;
+                </div>
+                <p style="
+            color: #388d37;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 0;
+        ">
+                    Zamówienie opłacone. Dziękujemy!
+                </p>
+            </div>
         {% endif %}
     </div>
 </div>
