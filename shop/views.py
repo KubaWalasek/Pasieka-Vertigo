@@ -13,7 +13,7 @@ from shop.models import CartItem, Order, OrderItem
 
 
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 
 class ShopProductView(View):
@@ -275,6 +275,8 @@ class SendOrderView(View):
             return redirect( 'order_finished', pk=order.id)
 
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 class OrderFinishedView(LoginRequiredMixin, View):
     def get(self, request, pk):
         order = Order.objects.get(pk=pk)
@@ -320,7 +322,7 @@ class StripeCheckoutSessionView(View):
 @csrf_exempt
 def stripe_webhook_view(request):
     # Pobierz sekret endpointa z panelu Stripe Webhooks
-    endpoint_secret = settings.STRIPE_ENDPOINT_SECRET
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
