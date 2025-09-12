@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 import stripe
 from django.conf import settings
@@ -319,11 +320,10 @@ class StripeCheckoutSessionView(View):
 
 
 
+
+
 @csrf_exempt
 def stripe_webhook_view(request):
-    import stripe
-    from django.conf import settings
-
     endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
     payload = request.body
@@ -334,28 +334,33 @@ def stripe_webhook_view(request):
             payload, sig_header, endpoint_secret
         )
     except ValueError:
-        print("Webhook: ValueError")
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError:
-        print("Webhook: Signature error")
         return HttpResponse(status=400)
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         session_id = session.get('id')
-        print("Webhook: otrzymano checkout.session.completed, session_id:", session_id)
         from shop.models import Order
         try:
             order = Order.objects.get(stripe_session_id=session_id)
-            print("Webhook: znaleziono zamówienie id:", order.id)
             order.paid = True
             order.save()
-            print(f"Webhook: order id {order.id} ustawiony na paid=True.")
+
+            # Wysyłka maila do klienta po opłaceniu zamówienia
+            subject = "Potwierdzenie opłacenia zamówienia"
+            message = (
+                f"Cześć {order.first_name},\n\n"
+                f"Twoje zamówienie nr {order.id} zostało opłacone.\n"
+                "Dziękujemy za zakupy w Pasiece Vertigo!"
+            )
+            recipient = [order.email]
+            send_mail(subject, message, None, recipient)
+
         except Order.DoesNotExist:
-            print("Webhook: NIE ZNALEZIONO zamówienia dla session_id:", session_id)
+            pass
 
     return HttpResponse(status=200)
-
 
 
 
